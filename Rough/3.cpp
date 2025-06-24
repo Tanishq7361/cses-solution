@@ -5,8 +5,8 @@
 using namespace std;
 
 #define King_T ios_base::sync_with_stdio(0);\
-	cin.tie(0); \
-	cout.tie(0);
+    cin.tie(0); \
+    cout.tie(0);
 #define endl '\n'
 #define ll long long
 #define stc static_cast
@@ -37,51 +37,51 @@ using namespace std;
 #define maxhp(T) priority_queue<T>
 #define minhp(T) priority_queue<T, vector<T>, greater<T>>
 #define in(T,n) \
-	T n;     \
-	cin >> n
+    T n;     \
+    cin >> n
 #define in2(T,n,k) \
-	T n,k;      \
-	cin >> n >> k
+    T n,k;      \
+    cin >> n >> k
 #define in3(T,a,b,c) \
-	T a,b,c;      \
-	cin >>a>>b>>c
+    T a,b,c;      \
+    cin >>a>>b>>c
 #define in4(T,a,b,c,d) \
-	T a,b,c,d;      \
-	cin >>a>>b>>c>>d
+    T a,b,c,d;      \
+    cin >>a>>b>>c>>d
 #define vin(a, n)              \
-	vll a(n);                  \
-	for (ll i = 0; i < n; i++) \
-		cin >> a[i];
+    vll a(n);                  \
+    for (ll i = 0; i < n; i++) \
+        cin >> a[i];
 #define vvin(a, n, m)              \
-	vvll a(n, vll(m));             \
-	for (ll i = 0; i < n; i++)     \
-	{                              \
-		for (ll j = 0; j < m; j++) \
-		{                          \
-			cin >> a[i][j];        \
-		}                          \
-	}
+    vvll a(n, vll(m));             \
+    for (ll i = 0; i < n; i++)     \
+    {                              \
+        for (ll j = 0; j < m; j++) \
+        {                          \
+            cin >> a[i][j];        \
+        }                          \
+    }
 #define vcin(a, n, m)              \
-	vvlc a(n, vlc(m));             \
-	for (ll i = 0; i < n; i++)     \
-	{                              \
-		for (ll j = 0; j < m; j++) \
-		{                          \
-			cin >> a[i][j];        \
-		}                          \
-	}
+    vvlc a(n, vlc(m));             \
+    for (ll i = 0; i < n; i++)     \
+    {                              \
+        for (ll j = 0; j < m; j++) \
+        {                          \
+            cin >> a[i][j];        \
+        }                          \
+    }
 #define vout(a)           \
-	for (auto x : a)      \
-	{                     \
-		cout << x << ' '; \
-	}                     \
-	cout << '\n';
+    for (auto x : a)      \
+    {                     \
+        cout << x << ' '; \
+    }                     \
+    cout << '\n';
 #define vpout(a)           \
-	for (pair<ll,ll> x : a)      \
-	{                     \
-		cout << x.ff << ' '<<x.ss<<endl; \
-	}                     \
-	cout << '\n';
+    for (pair<ll,ll> x : a)      \
+    {                     \
+        cout << x.ff << ' '<<x.ss<<endl; \
+    }                     \
+    cout << '\n';
 #define o1(a) cout << a << '\n'
 #define o2(a,b) cout << a << ' ' << b << '\n'
 #define o3(a,b,c) cout << a << ' ' << b << ' ' << c << '\n'
@@ -106,37 +106,37 @@ const ll N = 1e6+5;
 // rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
 
 inline bool isPrime(ll n) {
-	if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
-	for(ll i=5; i*i<=n; i+=6) { if(n % i == 0 || n % (i+2) == 0) return false; } return true;
+    if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
+    for(ll i=5; i*i<=n; i+=6) { if(n % i == 0 || n % (i+2) == 0) return false; } return true;
 }
 void SieveOfEratosthenes(ll n, vector<ll> &v)
 {
-	vector<bool> prime(n + 1, true);
-	for (int p = 2; p * p <= n; p++)
-	{
-		if (prime[p])
-		{
-			for (int i = p * p; i <= n; i += p)
-				prime[i] = false;
-		}
-	}
-	for (int p = 2; p <= n; p++)
-		if (prime[p])
-			v.emplace_back(p);
+    vector<bool> prime(n + 1, true);
+    for (int p = 2; p * p <= n; p++)
+    {
+        if (prime[p])
+        {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
+    for (int p = 2; p <= n; p++)
+        if (prime[p])
+            v.emplace_back(p);
 }
 vector<bool> sieve(ll n)
 {
-	vector<bool> isPrime(n + 1, true);
-	isPrime[0] = isPrime[1] = false;
-	for (ll i = 2; i * i <= n; i++)
-	{
-		if (isPrime[i])
-		{
-			for (ll j = i * i; j <= n; j += i)
-				isPrime[j] = false;
-		}
-	}
-	return isPrime;
+    vector<bool> isPrime(n + 1, true);
+    isPrime[0] = isPrime[1] = false;
+    for (ll i = 2; i * i <= n; i++)
+    {
+        if (isPrime[i])
+        {
+            for (ll j = i * i; j <= n; j += i)
+                isPrime[j] = false;
+        }
+    }
+    return isPrime;
 }
 inline ll power(ll a, ll b, ll mod = MOD) { ll ans = 1; a %= mod; while(b > 0) { if(b & 1) { ans = (ans * a) % mod; } a = (a * a) % mod; b >>= 1; } return ans; }
 inline bool isPowOfTwo(ll n) { return ((n > 0) && !(n & (n - 1))); }
@@ -157,103 +157,119 @@ inline ll toggleBit(ll n, ll pos) { return (n ^ (1 << pos)); }
 inline ll turnOffRightmostSetBit(ll n) { return (n & (n - 1)); }
 inline bool isBitSet(ll n, ll p) { return (n & (1LL << p)) != 0; }
 inline ll ansXor(ll n){
-	if (n % 4 == 0) return n;
-	if (n % 4 == 1) return 1;
-	if (n % 4 == 2) return n + 1;
-	return 0;
+    if (n % 4 == 0) return n;
+    if (n % 4 == 1) return 1;
+    if (n % 4 == 2) return n + 1;
+    return 0;
 }
 
 
 class DSU{
-	vll rank,par,size;
-	public:
-	DSU(ll n){
-		rank.resize(n+1,0);
-		par.resize(n+1);
-		size.resize(n+1,1);
-		fr(i,0,n+1){
-			par[i]=i;
-		}
-	}
-	ll findUpar(ll node){
-		if(node==par[node]){
-			return node;
-		}
-		return par[node]=findUpar(par[node]);
-	}
-	void unionbyrank(ll u,ll v){
-		ll ulp_u=findUpar(u);
-		ll ulp_v=findUpar(v);
-		if(ulp_u==ulp_v){return ;}
-		if(rank[ulp_u]<rank[ulp_v]){
-			par[ulp_u]=ulp_v;
-		}
-		else if(rank[ulp_u]>rank[ulp_v]){
-			par[ulp_v]=ulp_u;
-		}
-		else{
-			par[ulp_v]=ulp_u;
-			rank[ulp_u]++;
-		}
-	}
-	void unionbysize(ll u,ll v){
-		ll ulp_u=findUpar(u);
-		ll ulp_v=findUpar(v);
-		if(ulp_u==ulp_v){return ;}
-		if(size[ulp_u]<size[ulp_v]){
-			par[ulp_u]=ulp_v;
-			size[ulp_v]+=size[ulp_u];
-		}
-		else{
-			par[ulp_v]=ulp_u;
-			size[ulp_u]+=size[ulp_v];
-		}
-	}
+    vll rank,par,size;
+    public:
+    DSU(ll n){
+        rank.resize(n+1,0);
+        par.resize(n+1);
+        size.resize(n+1,1);
+        fr(i,0,n+1){
+            par[i]=i;
+        }
+    }
+    ll findUpar(ll node){
+        if(node==par[node]){
+            return node;
+        }
+        return par[node]=findUpar(par[node]);
+    }
+    void unionbyrank(ll u,ll v){
+        ll ulp_u=findUpar(u);
+        ll ulp_v=findUpar(v);
+        if(ulp_u==ulp_v){return ;}
+        if(rank[ulp_u]<rank[ulp_v]){
+            par[ulp_u]=ulp_v;
+        }
+        else if(rank[ulp_u]>rank[ulp_v]){
+            par[ulp_v]=ulp_u;
+        }
+        else{
+            par[ulp_v]=ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+    void unionbysize(ll u,ll v){
+        ll ulp_u=findUpar(u);
+        ll ulp_v=findUpar(v);
+        if(ulp_u==ulp_v){return ;}
+        if(size[ulp_u]<size[ulp_v]){
+            par[ulp_u]=ulp_v;
+            size[ulp_v]+=size[ulp_u];
+        }
+        else{
+            par[ulp_v]=ulp_u;
+            size[ulp_u]+=size[ulp_v];
+        }
+    }
 };
 
 
 ll ask(ll l, ll r) // for interactive -- change it as per question
 {
-	cout << "? " << l << ' ' << r << endl;
-	cout.flush();
-	ll ans;
-	cin >> ans;
-	return ans;
+    cout << "? " << l << ' ' << r << endl;
+    cout.flush();
+    ll ans;
+    cin >> ans;
+    return ans;
 }
 
 void prin(ll n){ // for interactive -- change it as per question
-	cout << "! "<< n <<endl;
+    cout << "! "<< n <<endl;
+}
+
+void dfs(ll node,vvll adj,vector<bool>&vis){
+    vis[node]=true;
+    for(auto x:adj[node]){
+        if(!vis[x]){
+            dfs(x,adj,vis);
+        }
+    }
 }
 
 void idharDekh()
 {
-	in2(ll,n,m);
-	vin(a,m);
-	srt(a);
-	ll ans=0;
-	fr(i,0,n){
-		auto z=upper_bound(all(a),a[i]);
-		
-	}
-
+    in(ll,n);
+    vin(a,n);
+    vvll adj(n+1);
+    fr(i,0,n){
+        adj[i+1].pb(a[i]);
+        adj[a[i]].pb(i+1);
+    }
+    vector<bool>vis(n+1,false);
+    ll ct=0;
+    fr(i,1,n+1){
+        if(!vis[i]){
+            ct++;
+            dfs(i,adj,vis);
+        }
+    }
+    o1(ct);
 }
 
 signed main()
 {
-	auto begin = std::chrono::high_resolution_clock::now();
-	King_T
-	ll t = 1;
-	cin >> t;
-	while (t--)
-	{
-		idharDekh();
-	}
+    auto begin = std::chrono::high_resolution_clock::now();
+    King_T
+    ll t = 1;
+    //cin >> t;
+    while (t--)
+    {
+        idharDekh();
+    }
 
 
-	auto end = std::chrono::high_resolution_clock::now();
-	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-	cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
-	return 0;
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
+    return 0;
 }
 
 // Remember :

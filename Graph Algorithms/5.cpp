@@ -10,22 +10,22 @@ using namespace std;
 #define vll vector<long long>
 
 bool dfs(vector<vector<ll>>&adj,vector<int>&vis,int nod,int prev){
-        vis[nod]=prev;
-        for(auto x:adj[nod]){
-            if(vis[x]==-1){
-                bool ans2=dfs(adj,vis,x,!prev);
-                if(!ans2){
-                    return false;
-                }
-            }
-            else{
-                if(vis[x]==prev){
-                  return false;
-                }
+    vis[nod]=prev;
+    for(auto x:adj[nod]){
+        if(vis[x]==-1){
+            bool ans2=dfs(adj,vis,x,!prev);
+            if(!ans2){
+                return false;
             }
         }
-        return true;
+        else{
+            if(vis[x]==prev){
+              return false;
+            }
+        }
     }
+    return true;
+}
 
 int main()
 {

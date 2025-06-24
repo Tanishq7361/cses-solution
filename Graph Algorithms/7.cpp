@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 21-06-2025
+// Date : 22-06-2025
 // problem : Monsters
 
 #include <bits/stdc++.h>
@@ -24,9 +24,9 @@ int main(){
         for(int j=0;j<m;j++){
             cin>>a[i][j];
             if(a[i][j]=='A'){
+                pq.push({i,j});
                 start={i,j};
             }
-            
         }
     }
     pq.push({start.first,start.second});
@@ -45,14 +45,16 @@ int main(){
         ll y=pq.front().second;
         pq.pop();
         if(x==0 || y==0 || x==n-1 || y==m-1){
-            f1=true;
-            ans={x,y};
-            break;
+            if(a[x][y]=='A'){
+                f1=true;
+                ans={x,y};
+                break;
+            }
         }
         for(int i=0;i<4;i++){
             ll xf=x+move[i].first;
             ll yf=y+move[i].second;
-            if(xf<n && yf<m && xf>=0 && yf>=0 && a[xf][yf]!='#' && !vis[xf][yf]){
+            if(xf<n && yf<m && xf>=0 && yf>=0 && a[xf][yf]=='.' && !vis[xf][yf]){
                 pq.push({xf,yf});
                 if(a[x][y]=='A'){
                     dirc[xf][yf]=dir[i];
@@ -60,6 +62,10 @@ int main(){
                 }
                 a[xf][yf]=a[x][y];
                 vis[xf][yf]=true;
+            }
+            else if(xf<n && yf<m && xf>=0 && yf>=0 && a[xf][yf]=='A' && vis[xf][yf] && a[x][y]=='M'){
+                pq.push({xf,yf});
+                a[xf][yf]=a[x][y];
             }
         }
     }
