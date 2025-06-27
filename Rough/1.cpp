@@ -1,5 +1,5 @@
 
-// created: 23.06.2025
+// created: 27.06.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -171,7 +171,7 @@ class DSU{
 		rank.resize(n+1,0);
 		par.resize(n+1);
 		size.resize(n+1,1);
-		fr(i,0,n+1){
+		for(int i=0;i<=n;i++){
 			par[i]=i;
 		}
 	}
@@ -182,31 +182,31 @@ class DSU{
 		return par[node]=findUpar(par[node]);
 	}
 	void unionbyrank(ll u,ll v){
-		ll ulp_u=findUpar(u);
-		ll ulp_v=findUpar(v);
-		if(ulp_u==ulp_v){return ;}
-		if(rank[ulp_u]<rank[ulp_v]){
-			par[ulp_u]=ulp_v;
+		ll parU=findUpar(u);
+		ll parV=findUpar(v);
+		if(parU==parV){return ;}
+		if(rank[parU]<rank[parV]){
+			par[parU]=parV;
 		}
-		else if(rank[ulp_u]>rank[ulp_v]){
-			par[ulp_v]=ulp_u;
+		else if(rank[parU]>rank[parV]){
+			par[parV]=parU;
 		}
 		else{
-			par[ulp_v]=ulp_u;
-			rank[ulp_u]++;
+			par[parV]=parU;
+			rank[parU]++;
 		}
 	}
 	void unionbysize(ll u,ll v){
-		ll ulp_u=findUpar(u);
-		ll ulp_v=findUpar(v);
-		if(ulp_u==ulp_v){return ;}
-		if(size[ulp_u]<size[ulp_v]){
-			par[ulp_u]=ulp_v;
-			size[ulp_v]+=size[ulp_u];
+		ll parU=findUpar(u);
+		ll parV=findUpar(v);
+		if(parU==parV){return ;}
+		if(size[parU]<size[parV]){
+			par[parU]=parV;
+			size[parV]+=size[parU];
 		}
 		else{
-			par[ulp_v]=ulp_u;
-			size[ulp_u]+=size[ulp_v];
+			par[parV]=parU;
+			size[parU]+=size[parV];
 		}
 	}
 };
@@ -227,15 +227,7 @@ void prin(ll n){ // for interactive -- change it as per question
 
 void idharDekh()
 {
-	in2(ll,n,m);
-	vin(a,m);
-	srt(a);
-	ll ans=0;
-	fr(i,0,n){
-		auto z=upper_bound(all(a),a[i]);
-		
-	}
-
+	
 }
 
 signed main()
@@ -256,8 +248,3 @@ signed main()
 	return 0;
 }
 
-// Remember :
-// indegree
-// n-1 iteration
-// floyd n*n mat
-// prim/krusk - MST
