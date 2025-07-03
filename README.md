@@ -29,13 +29,13 @@ The problems are organized into different categories as listed on the CSES site.
 
 |----------|--------|
 
-| IntroductoryProblems | 0 |
+| IntroductoryProblems | 17 |
 
-| SortingandSearching | 0 |
+| SortingandSearching | 19 |
 
-| DynamicProgramming | 0 |
+| DynamicProgramming | 2 |
 
-| GraphAlgorithms | 0 |
+| GraphAlgorithms | 18 |
 
 <!--PROGRESS_END-->
 
