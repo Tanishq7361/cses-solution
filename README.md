@@ -1,5 +1,5 @@
 # cses
 
-## Some of my code for `CSES`
+## Some of my codes for `CSES`
 
 # i hope you understand this
