@@ -18,10 +18,10 @@ jobs:
       - name: Count files by category
         id: counts
         run: |
-          intro=$(find "cses/IntroductoryProblems" -name "*.cpp" 2>/dev/null | wc -l)
-          sort=$(find "cses/SortingandSearching" -name "*.cpp" 2>/dev/null | wc -l)
-          dp=$(find "cses/DynamicProgramming" -name "*.cpp" 2>/dev/null | wc -l)
-          graph=$(find "cses/GraphAlgorithms" -name "*.cpp" 2>/dev/null | wc -l)
+          intro=$(find "IntroductoryProblems" -name "*.cpp" 2>/dev/null | wc -l)
+          sort=$(find "SortingandSearching" -name "*.cpp" 2>/dev/null | wc -l)
+          dp=$(find "DynamicProgramming" -name "*.cpp" 2>/dev/null | wc -l)
+          graph=$(find "GraphAlgorithms" -name "*.cpp" 2>/dev/null | wc -l)
           echo "intro=$intro" >> $GITHUB_OUTPUT
           echo "sort=$sort" >> $GITHUB_OUTPUT
           echo "dp=$dp" >> $GITHUB_OUTPUT
