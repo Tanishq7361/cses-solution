@@ -39,6 +39,17 @@ jobs:
           | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |\n\
           <!--PROGRESS_END-->' README.md
 
+      - name: Debug Secret Injection
+        env:
+          TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "❌ GH_PAT is empty or not configured properly!"
+            exit 1
+          else
+            echo "✅ GH_PAT is injected. Token length: ${#TOKEN}"
+          fi
+
       - name: Commit and Push
         env:
           TOKEN: ${{ secrets.GH_PAT }}
