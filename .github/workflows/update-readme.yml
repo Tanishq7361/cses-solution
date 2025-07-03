@@ -18,10 +18,10 @@ jobs:
       - name: Count files by category
         id: counts
         run: |
-          intro=$(find "cses/Introductory Problems" -name "*.cpp" 2>/dev/null | wc -l)
-          sort=$(find "cses/Sorting and Searching" -name "*.cpp" 2>/dev/null | wc -l)
-          dp=$(find "cses/Dynamic Programming" -name "*.cpp" 2>/dev/null | wc -l)
-          graph=$(find "cses/Graph Algorithms" -name "*.cpp" 2>/dev/null | wc -l)
+          intro=$(find "cses/IntroductoryProblems" -name "*.cpp" 2>/dev/null | wc -l)
+          sort=$(find "cses/SortingandSearching" -name "*.cpp" 2>/dev/null | wc -l)
+          dp=$(find "cses/DynamicProgramming" -name "*.cpp" 2>/dev/null | wc -l)
+          graph=$(find "cses/GraphAlgorithms" -name "*.cpp" 2>/dev/null | wc -l)
           echo "intro=$intro" >> $GITHUB_OUTPUT
           echo "sort=$sort" >> $GITHUB_OUTPUT
           echo "dp=$dp" >> $GITHUB_OUTPUT
@@ -33,10 +33,10 @@ jobs:
           <!--PROGRESS_START-->\n\
           | Category | Solved |\n\
           |----------|--------|\n\
-          | Introductory Problems | '${{ steps.counts.outputs.intro }}' |\n\
-          | Sorting and Searching | '${{ steps.counts.outputs.sort }}' |\n\
-          | Dynamic Programming | '${{ steps.counts.outputs.dp }}' |\n\
-          | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |\n\
+          | IntroductoryProblems | '${{ steps.counts.outputs.intro }}' |\n\
+          | SortingandSearching | '${{ steps.counts.outputs.sort }}' |\n\
+          | DynamicProgramming | '${{ steps.counts.outputs.dp }}' |\n\
+          | GraphAlgorithms | '${{ steps.counts.outputs.graph }}' |\n\
           <!--PROGRESS_END-->' README.md
 
       - name: Debug Secret Injection
