@@ -21,21 +21,6 @@ The problems are organized into different categories as listed on the CSES site.
 - 💡 Additional Problems coming soon...
 
 ---
-
-## ✅ Progress Tracker
-
-| Category                  | Total Problems | Solved |
-|--------------------------|----------------|--------|
-| Introductory Problems    | 19             | ✅ 19  |
-| Sorting and Searching    | 16             | ✅ 10  |
-| Dynamic Programming      | 19             | ✅ 8   |
-| Graph Algorithms         | 37             | ✅ 12  |
-| Range Queries            | 15             | ✅ 5   |
-| Tree Algorithms          | 10             | ✅ 3   |
-
-> 📈 Stay tuned as I keep updating this regularly!
-
----
 ## 📈 CSES Progress
 
 <!--PROGRESS_START-->
