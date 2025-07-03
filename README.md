@@ -7,7 +7,7 @@ This repository contains my solutions to the [CSES Problem Set](https://cses.fi/
 The problems are organized into different categories as listed on the CSES site. Each file is named according to the problem title for clarity.
 
 
-> Language used: **C++17**
+> Language used: **C++20**
 
 ---
 
