@@ -10,5 +10,6 @@ using namespace std;
 #define vll vector<long long>
 int main()
 {
-
+    ll n;
+    cin>>n;
 }

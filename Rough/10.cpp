@@ -97,6 +97,7 @@ void idharDekh()
 	cin>>n>>k;
 	string s;
 	cin>>s;
+
 	
 }
 
