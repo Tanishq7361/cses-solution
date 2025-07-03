@@ -36,6 +36,12 @@ The problems are organized into different categories as listed on the CSES site.
 > 📈 Stay tuned as I keep updating this regularly!
 
 ---
+## 📈 CSES Progress
+
+<!--PROGRESS_START-->
+Will be updated by GitHub Actions.
+<!--PROGRESS_END-->
+
 
 ## 📂 How to Use
 
