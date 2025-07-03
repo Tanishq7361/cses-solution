@@ -1,4 +1,3 @@
-
 name: 📊 Auto Update CSES Progress
 
 on:
@@ -28,26 +27,16 @@ jobs:
           echo "dp=$dp" >> $GITHUB_OUTPUT
           echo "graph=$graph" >> $GITHUB_OUTPUT
 
-      - name: Log Counted Files
-        run: |
-          echo "Intro:"
-          find "cses/Introductory Problems" -name "*.cpp"
-          echo "Sort:"
-          find "cses/Sorting and Searching" -name "*.cpp"
-          echo "DP:"
-          find "cses/Dynamic Programming" -name "*.cpp"
-          echo "Graph:"
-          find "cses/Graph Algorithms" -name "*.cpp"
-
       - name: Update README
         run: |
-          sed -i '/<!--PROGRESS_START-->/,/<!--PROGRESS_END-->/c          <!--PROGRESS_START-->
-          | Category | Solved |
-          |----------|--------|
-          | Introductory Problems | '${{ steps.counts.outputs.intro }}' |
-          | Sorting and Searching | '${{ steps.counts.outputs.sort }}' |
-          | Dynamic Programming | '${{ steps.counts.outputs.dp }}' |
-          | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |
+          sed -i '/<!--PROGRESS_START-->/,/<!--PROGRESS_END-->/c\
+          <!--PROGRESS_START-->\n\
+          | Category | Solved |\n\
+          |----------|--------|\n\
+          | Introductory Problems | '${{ steps.counts.outputs.intro }}' |\n\
+          | Sorting and Searching | '${{ steps.counts.outputs.sort }}' |\n\
+          | Dynamic Programming | '${{ steps.counts.outputs.dp }}' |\n\
+          | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |\n\
           <!--PROGRESS_END-->' README.md
 
       - name: Debug Secret Injection
