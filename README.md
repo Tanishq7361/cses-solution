@@ -24,7 +24,19 @@ The problems are organized into different categories as listed on the CSES site.
 ## 📈 CSES Progress
 
 <!--PROGRESS_START-->
-Will be updated by GitHub Actions.
+
+| Category | Solved |
+
+|----------|--------|
+
+| Introductory Problems | 0 |
+
+| Sorting and Searching | 0 |
+
+| Dynamic Programming | 0 |
+
+| Graph Algorithms | 0 |
+
 <!--PROGRESS_END-->
 
 
