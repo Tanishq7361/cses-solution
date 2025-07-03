@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+// Date : 30-06-2025
 // problem : minimizing coins
 
 #include <bits/stdc++.h>
@@ -11,10 +12,15 @@ int main()
 {
     ll n, k;
     cin >> n >> k;
-    ll a[n];
+    vll a(n);
     for (int i = 0; i < n; i++)
     {
         cin >> a[i];
+    }
+    sort(a.begin(),a.end());
+    ll sum=0;
+    for(int i=n-1;i>=0;i--){
+        
     }
     
 }

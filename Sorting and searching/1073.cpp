@@ -16,11 +16,16 @@ int main()
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    ll ct=1;
-    for(int i=n-2;i>=0;i--){
-        if(a[i]<a[i+1]){
-            ct++;
+    vll tower;
+    for(int i=0;i<n;i++){
+
+        if(tower.size()==0 || tower.back()<=a[i]){
+            tower.push_back(a[i]);
+        }
+        else{
+            ll z=upper_bound(tower.begin(),tower.end(),a[i])-tower.begin();
+            tower[z]=a[i];
         }
     }
-    cout<<ct<<endl;
+    cout<<tower.size()<<endl;
 }

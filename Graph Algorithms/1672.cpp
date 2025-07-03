@@ -15,7 +15,6 @@ int main()
 	cout.tie(0);
     ll n,m,q;
     cin>>n>>m>>q;
-    //vector<pair<ll,ll>>adj[n+1];
     vector<vector<ll>>dist(n+1,vector<ll>(n+1,LLONG_MAX));
     for(int i=0;i<m;i++){
         ll x,y,z;
@@ -23,8 +22,6 @@ int main()
         dist[x][y]=min(dist[x][y],z);
         dist[y][x]=min(dist[y][x],z);
     }
-    
-    
     for(int i=1;i<=n;i++){
         dist[i][i]=0;
     }
