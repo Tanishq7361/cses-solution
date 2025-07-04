@@ -18,15 +18,15 @@ jobs:
       - name: Count files by category
         id: counts
         run: |
-          intro=$(find "Introductory Problems" -name "*.cpp" 2>/dev/null | wc -l)
-          sort=$(find "Sorting and Searching" -name "*.cpp" 2>/dev/null | wc -l)
-          dp=$(find "Dynamic Programming" -name "*.cpp" 2>/dev/null | wc -l)
-          graph=$(find "Graph Algorithms" -name "*.cpp" 2>/dev/null | wc -l)
-          inter=$(find "Interactive Problems" -name "*.cpp" 2>/dev/null | wc -l)
+          intro=$(find "Introductory_Problems" -name "*.cpp" 2>/dev/null | wc -l)
+          sort=$(find "Sorting_and_Searching" -name "*.cpp" 2>/dev/null | wc -l)
+          dp=$(find "Dynamic_Programming" -name "*.cpp" 2>/dev/null | wc -l)
+          graph=$(find "Graph_Algorithms" -name "*.cpp" 2>/dev/null | wc -l)
+          inter=$(find "Interactive_Problems" -name "*.cpp" 2>/dev/null | wc -l)
           math=$(find "Mathematics" -name "*.cpp" 2>/dev/null | wc -l)
-          range=$(find "Range Queries" -name "*.cpp" 2>/dev/null | wc -l)
-          string=$(find "String Algorithm" -name "*.cpp" 2>/dev/null | wc -l)
-          bit=$(find "Bitwise Operation" -name "*.cpp" 2>/dev/null | wc -l)
+          range=$(find "Range_Queries" -name "*.cpp" 2>/dev/null | wc -l)
+          string=$(find "String_Algorithm" -name "*.cpp" 2>/dev/null | wc -l)
+          bit=$(find "Bitwise_Operation" -name "*.cpp" 2>/dev/null | wc -l)
           echo "intro=$intro" >> $GITHUB_OUTPUT
           echo "sort=$sort" >> $GITHUB_OUTPUT
           echo "dp=$dp" >> $GITHUB_OUTPUT
