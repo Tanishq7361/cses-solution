@@ -26,17 +26,16 @@ The problems are organized into different categories as listed on the CSES site.
 <!--PROGRESS_START-->
 
 | Category | Solved |
-
 |----------|--------|
-
-| IntroductoryProblems | 17 |
-
-| SortingandSearching | 19 |
-
-| DynamicProgramming | 2 |
-
-| GraphAlgorithms | 18 |
-
+| Introductory Problems | 17 |
+| Sorting and Searching | 19 |
+| Dynamic Programming | 2 |
+| Graph Algorithms | 18 |
+| Interactive Problems | 1 |
+| Mathematics | 5 |
+| Range Queries | 5 |
+| String Algorithm | 1 |
+| Bitwise Operation | 1 |
 <!--PROGRESS_END-->
 
 ## 📂 How to Use

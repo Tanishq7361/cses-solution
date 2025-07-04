@@ -41,17 +41,17 @@ jobs:
         run: |
           sed -i '/<!--PROGRESS_START-->/,/<!--PROGRESS_END-->/c\
           <!--PROGRESS_START-->\n\
-          | Category | Solved |\n\
-          |----------|--------|\n\
-          | Introductory Problems | '${{ steps.counts.outputs.intro }}' |\n\
-          | Sorting and Searching | '${{ steps.counts.outputs.sort }}' |\n\
-          | Dynamic Programming | '${{ steps.counts.outputs.dp }}' |\n\
-          | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |\n\
-          | Interactive Problems | '${{ steps.counts.outputs.inter }}' |\n\
-          | Mathematics | '${{ steps.counts.outputs.math }}' |\n\
-          | Range Queries | '${{ steps.counts.outputs.range }}' |\n\
-          | String Algorithm | '${{ steps.counts.outputs.string }}' |\n\
-          | Bitwise Operation | '${{ steps.counts.outputs.bit }}' |\n\
+          | Category | Solved |\
+          |----------|--------|\
+          | Introductory Problems | '${{ steps.counts.outputs.intro }}' |\
+          | Sorting and Searching | '${{ steps.counts.outputs.sort }}' |\
+          | Dynamic Programming | '${{ steps.counts.outputs.dp }}' |\
+          | Graph Algorithms | '${{ steps.counts.outputs.graph }}' |\
+          | Interactive Problems | '${{ steps.counts.outputs.inter }}' |\
+          | Mathematics | '${{ steps.counts.outputs.math }}' |\
+          | Range Queries | '${{ steps.counts.outputs.range }}' |\
+          | String Algorithm | '${{ steps.counts.outputs.string }}' |\
+          | Bitwise Operation | '${{ steps.counts.outputs.bit }}' |\
           <!--PROGRESS_END-->' README.md
 
       - name: Debug Secret Injection
