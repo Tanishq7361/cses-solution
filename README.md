@@ -27,7 +27,7 @@ The problems are organized into different categories as listed on the CSES site.
 
 | Category | Solved |
 |----------|--------|
-| Introductory Problems | 17 |
+| Introductory Problems | 22 |
 | Sorting and Searching | 19 |
 | Dynamic Programming | 2 |
 | Graph Algorithms | 18 |
