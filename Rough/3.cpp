@@ -237,21 +237,20 @@ void dfs(ll node,vvll adj,vector<bool>&vis){
 void idharDekh()
 {
     in(ll,n);
-    vin(a,n);
-    vvll adj(n+1);
-    fr(i,0,n){
-        adj[i+1].pb(a[i]);
-        adj[a[i]].pb(i+1);
-    }
-    vector<bool>vis(n+1,false);
-    ll ct=0;
+    vector<ll>dp(4,0),temp(4,0);
+    temp[3]=1;
     fr(i,1,n+1){
-        if(!vis[i]){
-            ct++;
-            dfs(i,adj,vis);
-        }
+        dp[0]=temp[1]+temp[2]+temp[3];
+        dp[0]%=MOD;
+        dp[1]=temp[0]+temp[2]+temp[3];
+        dp[1]%=MOD;
+        dp[2]=temp[1]+temp[0]+temp[3];
+        dp[2]%=MOD;
+        dp[3]=temp[1]+temp[2]+temp[0];
+        dp[3]%=MOD;
+        temp=dp;
     }
-    o1(ct);
+    cout<<dp[3]<<endl;
 }
 
 signed main()
