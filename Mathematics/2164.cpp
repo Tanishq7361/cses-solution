@@ -15,7 +15,6 @@ int main(){
     cin>>tt;
     while(tt--){
         ll n,k;
-        cin>>n>>k;
         
     }
 }
