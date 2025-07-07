@@ -1,5 +1,4 @@
-
-// created: 23.06.2025
+// created: 06.07.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,8 +13,7 @@ using namespace std;
 #define vvll vector<vector<ll>>
 #define vpll vector<pair<ll, ll>>
 #define vld vector<long double>
-#define vlc vector<char>
-#define vvlc vector<vector<char>>
+#define vcs vector<string>
 #define pll pair<ll, ll>
 #define mll map<ll, ll>
 #define umll unordered_map<ll, ll>
@@ -36,18 +34,15 @@ using namespace std;
 #define frr(i, r, l) for (ll i = (r - 1); i >= l; i--)
 #define maxhp(T) priority_queue<T>
 #define minhp(T) priority_queue<T, vector<T>, greater<T>>
-#define in(T,n) \
-    T n;     \
+#define str(s) \
+    string s;  \
+    cin >> s
+#define in(n) \
+    ll n;     \
     cin >> n
-#define in2(T,n,k) \
-    T n,k;      \
+#define inn(n, k) \
+    ll n, k;      \
     cin >> n >> k
-#define in3(T,a,b,c) \
-    T a,b,c;      \
-    cin >>a>>b>>c
-#define in4(T,a,b,c,d) \
-    T a,b,c,d;      \
-    cin >>a>>b>>c>>d
 #define vin(a, n)              \
     vll a(n);                  \
     for (ll i = 0; i < n; i++) \
@@ -61,32 +56,14 @@ using namespace std;
             cin >> a[i][j];        \
         }                          \
     }
-#define vcin(a, n, m)              \
-    vvlc a(n, vlc(m));             \
-    for (ll i = 0; i < n; i++)     \
-    {                              \
-        for (ll j = 0; j < m; j++) \
-        {                          \
-            cin >> a[i][j];        \
-        }                          \
-    }
 #define vout(a)           \
     for (auto x : a)      \
     {                     \
         cout << x << ' '; \
     }                     \
     cout << '\n';
-#define vpout(a)           \
-    for (pair<ll,ll> x : a)      \
-    {                     \
-        cout << x.ff << ' '<<x.ss<<endl; \
-    }                     \
-    cout << '\n';
-#define o1(a) cout << a << '\n'
-#define o2(a,b) cout << a << ' ' << b << '\n'
-#define o3(a,b,c) cout << a << ' ' << b << ' ' << c << '\n'
-#define o4(a,b,c,d) cout << a << ' ' << b << ' ' << c << ' ' << d << '\n'
-#define sz(x) ll((x).size()) 
+#define out(a) cout << a << '\n';
+#define sze(x) ll((x).size()) 
 #define all(x) (x).begin(), (x).end()
 #define srt(x) sort((x).begin(), (x).end())
 #define rsrt(x) sort((x).rbegin(), (x).rend())
@@ -139,6 +116,7 @@ vector<bool> sieve(ll n)
     return isPrime;
 }
 inline ll power(ll a, ll b, ll mod = MOD) { ll ans = 1; a %= mod; while(b > 0) { if(b & 1) { ans = (ans * a) % mod; } a = (a * a) % mod; b >>= 1; } return ans; }
+inline void factorial(ll n, vector<ll>& a) { a.resize(n+1, 1); for(ll i=1; i<=n; i++) { a[i] = (a[i-1] * i) % MOD; } }
 inline bool isPowOfTwo(ll n) { return ((n > 0) && !(n & (n - 1))); }
 inline bool isPerfectSq(ll n) { if(n < 0) return false; ll sr = static_cast<ll>(sqrt(n)); return (sr*sr == n); }
 inline bool compbyss(pair<ll, ll> a, pair<ll, ll> b) { return a.second < b.second; }
@@ -163,94 +141,29 @@ inline ll ansXor(ll n){
     return 0;
 }
 
-
-class DSU{
-    vll rank,par,size;
-    public:
-    DSU(ll n){
-        rank.resize(n+1,0);
-        par.resize(n+1);
-        size.resize(n+1,1);
-        fr(i,0,n+1){
-            par[i]=i;
-        }
-    }
-    ll findUpar(ll node){
-        if(node==par[node]){
-            return node;
-        }
-        return par[node]=findUpar(par[node]);
-    }
-    void unionbyrank(ll u,ll v){
-        ll ulp_u=findUpar(u);
-        ll ulp_v=findUpar(v);
-        if(ulp_u==ulp_v){return ;}
-        if(rank[ulp_u]<rank[ulp_v]){
-            par[ulp_u]=ulp_v;
-        }
-        else if(rank[ulp_u]>rank[ulp_v]){
-            par[ulp_v]=ulp_u;
-        }
-        else{
-            par[ulp_v]=ulp_u;
-            rank[ulp_u]++;
-        }
-    }
-    void unionbysize(ll u,ll v){
-        ll ulp_u=findUpar(u);
-        ll ulp_v=findUpar(v);
-        if(ulp_u==ulp_v){return ;}
-        if(size[ulp_u]<size[ulp_v]){
-            par[ulp_u]=ulp_v;
-            size[ulp_v]+=size[ulp_u];
-        }
-        else{
-            par[ulp_v]=ulp_u;
-            size[ulp_u]+=size[ulp_v];
-        }
-    }
-};
-
-
-ll ask(ll l, ll r) // for interactive -- change it as per question
-{
-    cout << "? " << l << ' ' << r << endl;
-    cout.flush();
-    ll ans;
-    cin >> ans;
-    return ans;
-}
-
-void prin(ll n){ // for interactive -- change it as per question
-    cout << "! "<< n <<endl;
-}
-
-void dfs(ll node,vvll adj,vector<bool>&vis){
-    vis[node]=true;
-    for(auto x:adj[node]){
-        if(!vis[x]){
-            dfs(x,adj,vis);
-        }
-    }
-}
-
 void idharDekh()
 {
-    in(ll,n);
-    vector<ll>dp(4,0),temp(4,0);
-    temp[3]=1;
-    fr(i,1,n+1){
-        dp[0]=temp[1]+temp[2]+temp[3];
-        dp[0]%=MOD;
-        dp[1]=temp[0]+temp[2]+temp[3];
-        dp[1]%=MOD;
-        dp[2]=temp[1]+temp[0]+temp[3];
-        dp[2]%=MOD;
-        dp[3]=temp[1]+temp[2]+temp[0];
-        dp[3]%=MOD;
-        temp=dp;
+    in(n);
+    vin(a,n);
+    ll j=-1;
+    ll ans=0;
+    frr(i,n-1,0){
+        if(a[i]>a[i+1]){
+            j=i;
+            ans=a[i]/a[i+1];
+            break;
+        }
     }
-    cout<<dp[3]<<endl;
+    if(j==-1){
+        cout<<343<<endl;
+        done;
+    }
+    fr(i,0,n-1){
+        if(a[i]>a[i+1] || a[i+1]%a[i]!=0){
+            ans=gcd(ans,a[i]/a[i+1]);
+        }
+    }
+    cout<<ans<<endl;
 }
 
 signed main()
@@ -258,21 +171,13 @@ signed main()
     auto begin = std::chrono::high_resolution_clock::now();
     King_T
     ll t = 1;
-    //cin >> t;
+    cin >> t;
     while (t--)
     {
         idharDekh();
     }
-
-
     auto end = std::chrono::high_resolution_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
     cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
     return 0;
 }
-
-// Remember :
-// indegree
-// n-1 iteration
-// floyd n*n mat
-// prim/krusk - MST
