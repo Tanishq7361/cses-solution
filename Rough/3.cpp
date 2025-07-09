@@ -1,4 +1,4 @@
-// created: 06.07.2025
+// created: 07.07.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -140,27 +140,62 @@ inline ll ansXor(ll n){
     if (n % 4 == 2) return n + 1;
     return 0;
 }
-
+class DSU {
+private :
+    vector<ll> parent, size, edge;
+public :
+    DSU(ll n) {
+        parent.resize(n + 1); size.assign(n + 1, 1);
+        edge.assign(n+1, 0);
+        iota(parent.begin(), parent.end(), 0);
+    }
+    ll find(ll x) {
+        if(parent[x] == x) return x;
+        return parent[x] = find(parent[x]);
+    }
+    void unite(ll x, ll y) {
+        x = find(x), y = find(y);
+        if(x != y) {
+            if(size[x] < size[y]) { swap(x, y); }
+            parent[y] = x; size[x] += size[y];
+            edge[x] += edge[y] + 1;
+        } else { edge[x]++; }
+    }
+    ll componentCount(ll n) {
+        ll count = 0;
+        for(ll i=1;i<=n;i++) { if(find(i) == i) count++; }
+        return count;
+    }
+    bool isSame(ll x, ll y) { return find(x) == find(y); }
+    ll getSize(ll x) { return size[find(x)]; }
+    ll getEdgeCount(ll x) { return edge[find(x)]; }
+};
 void idharDekh()
 {
-    in(n);
-    vin(a,n);
-    ll j=-1;
+
+    ll n;
+    cin>>n;
     ll ans=0;
-    frr(i,n-1,0){
-        if(a[i]>a[i+1]){
-            j=i;
-            ans=a[i]/a[i+1];
-            break;
+    vector<pair<ll,pll>>adj(n);
+    fr(i,0,n){
+        ll a,b,c;
+        cin>>a>>b>>c;
+        adj[i]={c,{a,b}};
+    }
+    rsrt(adj);
+    umll mpp1,mpp2;
+    fr(i,0,n){
+        ll a=adj[i].ss.ff;
+        ll b=adj[i].ss.ss;
+        ll c=adj[i].ff;
+        if(mpp1.find(a)==mpp1.end() && mpp2.find(b)==mpp2.end()){
+            mpp1[a]++;
+            mpp2[b]++;
         }
-    }
-    if(j==-1){
-        cout<<343<<endl;
-        done;
-    }
-    fr(i,0,n-1){
-        if(a[i]>a[i+1] || a[i+1]%a[i]!=0){
-            ans=gcd(ans,a[i]/a[i+1]);
+        else{
+            mpp1[b]++;
+            mpp2[a]++;
+            ans+=c;
         }
     }
     cout<<ans<<endl;
@@ -171,7 +206,7 @@ signed main()
     auto begin = std::chrono::high_resolution_clock::now();
     King_T
     ll t = 1;
-    cin >> t;
+    //cin >> t;
     while (t--)
     {
         idharDekh();

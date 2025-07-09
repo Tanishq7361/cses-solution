@@ -1,4 +1,4 @@
-// created: 06.07.2025
+// created: 07.07.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -141,9 +141,22 @@ inline ll ansXor(ll n){
     return 0;
 }
 
+void dfs(vector<vector<char>>a){
+
+}
+
 void idharDekh()
 {
-
+    ll n,m,k;
+    cin>>n>>m>>k;
+    vector<vector<char>>a(n,vector<char>(m));
+    vector<pll>move={{1,0},{0,-1},{0,1},{-1,0}};
+    vector<char>dir={'D','L','R','U'};
+    fr(i,0,n){
+        fr(j,0,m){
+            cin>>a[i][j];
+        }
+    }
 }
 
 signed main()

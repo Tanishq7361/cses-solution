@@ -5,6 +5,7 @@ on:
     paths:
       - 'cses/**'
       - '.github/workflows/update-readme.yml'
+      - '**.cpp'
   workflow_dispatch:
 
 jobs:
