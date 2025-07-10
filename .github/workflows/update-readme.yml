@@ -3,7 +3,7 @@ name: 📊 Auto Update CSES Progress
 on:
   push:
     paths:
-      - 'cses/**'
+      - 'cses-solution/**'
       - '.github/workflows/update-readme.yml'
       - '**.cpp'
   workflow_dispatch:
@@ -28,6 +28,7 @@ jobs:
           range=$(find "Range_Queries" -name "*.cpp" 2>/dev/null | wc -l)
           string=$(find "String_Algorithm" -name "*.cpp" 2>/dev/null | wc -l)
           bit=$(find "Bitwise_Operation" -name "*.cpp" 2>/dev/null | wc -l)
+          window=$(find "Sliding_Window_Problems" -name "*.cpp" 2>/dev/null | wc -l)
           echo "intro=$intro" >> $GITHUB_OUTPUT
           echo "sort=$sort" >> $GITHUB_OUTPUT
           echo "dp=$dp" >> $GITHUB_OUTPUT
@@ -37,6 +38,7 @@ jobs:
           echo "range=$range" >> $GITHUB_OUTPUT
           echo "string=$string" >> $GITHUB_OUTPUT
           echo "bit=$bit" >> $GITHUB_OUTPUT
+          echo "window=$window" >> $GITHUB_OUTPUT
 
       - name: Update README
         run: |
@@ -53,6 +55,7 @@ jobs:
           | Range Queries | '${{ steps.counts.outputs.range }}' |\
           | String Algorithm | '${{ steps.counts.outputs.string }}' |\
           | Bitwise Operation | '${{ steps.counts.outputs.bit }}' |\
+          | Sliding Window | '${{ steps.counts.outputs.window }}' |\
           <!--PROGRESS_END-->' README.md
 
       - name: Debug Secret Injection
@@ -73,7 +76,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git config --local --unset-all http.https://github.com/.extraheader
-          git remote set-url origin https://x-access-token:${TOKEN}@github.com/Tanishq7361/cses.git
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/Tanishq7361/cses-solution.git
           git add README.md
           git commit -m "🔄 auto-update README with progress" || echo "No changes to commit"
           git push origin HEAD:main
