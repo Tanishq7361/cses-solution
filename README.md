@@ -28,7 +28,7 @@ The problems are organized into different categories as listed on the CSES site.
 | Category | Solved |
 |----------|--------|
 | Introductory Problems | 23 |
-| Sorting and Searching | 25 |
+| Sorting and Searching | 28 |
 | Dynamic Programming | 3 |
 | Graph Algorithms | 19 |
 | Interactive Problems | 1 |
@@ -36,6 +36,7 @@ The problems are organized into different categories as listed on the CSES site.
 | Range Queries | 5 |
 | String Algorithm | 1 |
 | Bitwise Operation | 1 |
+| Sliding Window | 4 |
 <!--PROGRESS_END-->
 
 ## 📂 How to Use
