@@ -1,4 +1,4 @@
-// created: 07.07.2025
+// created: 11.07.2025
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -140,74 +140,58 @@ inline ll ansXor(ll n){
     if (n % 4 == 2) return n + 1;
     return 0;
 }
-class DSU {
-private :
-    vector<ll> parent, size, edge;
-public :
-    DSU(ll n) {
-        parent.resize(n + 1); size.assign(n + 1, 1);
-        edge.assign(n+1, 0);
-        iota(parent.begin(), parent.end(), 0);
-    }
-    ll find(ll x) {
-        if(parent[x] == x) return x;
-        return parent[x] = find(parent[x]);
-    }
-    void unite(ll x, ll y) {
-        x = find(x), y = find(y);
-        if(x != y) {
-            if(size[x] < size[y]) { swap(x, y); }
-            parent[y] = x; size[x] += size[y];
-            edge[x] += edge[y] + 1;
-        } else { edge[x]++; }
-    }
-    ll componentCount(ll n) {
-        ll count = 0;
-        for(ll i=1;i<=n;i++) { if(find(i) == i) count++; }
-        return count;
-    }
-    bool isSame(ll x, ll y) { return find(x) == find(y); }
-    ll getSize(ll x) { return size[find(x)]; }
-    ll getEdgeCount(ll x) { return edge[find(x)]; }
-};
+
 void idharDekh()
 {
-
-    ll n;
-    cin>>n;
-    ll ans=0;
-    vector<pair<ll,pll>>adj(n);
-    fr(i,0,n){
-        ll a,b,c;
-        cin>>a>>b>>c;
-        adj[i]={c,{a,b}};
+    in(n);
+    queue<ll>q1,q2;
+    in(n1);
+    fr(i,0,n1){
+        ll x;
+        cin>>x;
+        q1.push(x);
     }
-    rsrt(adj);
-    umll mpp1,mpp2;
-    fr(i,0,n){
-        ll a=adj[i].ss.ff;
-        ll b=adj[i].ss.ss;
-        ll c=adj[i].ff;
-        if(mpp1.find(a)==mpp1.end() && mpp2.find(b)==mpp2.end()){
-            mpp1[a]++;
-            mpp2[b]++;
+    in(n2);
+    fr(i,0,n2){
+        ll x;
+        cin>>x;
+        q2.push(x);
+    }
+    ll ct=100000;
+    while(!q1.empty() && !q2.empty() && ct){
+        ll z1=q1.front();
+        ll z2=q2.front();
+        q1.pop();
+        q2.pop();
+        if(z1>z2){
+            q1.push(z2);
+            q1.push(z1);
         }
         else{
-            mpp1[b]++;
-            mpp2[a]++;
-            ans+=c;
+            q2.push(z1);
+            q2.push(z2);
         }
+        ct--;
     }
-    cout<<ans<<endl;
+    if(q1.empty()){
+        cout<<100000-ct<<' '<<2<<endl;
+    }
+    else if(q2.empty()){
+        cout<<100000-ct<<' '<<1<<endl;
+    }
+    else{
+        mone;
+        done;
+    }
 }
 
 signed main()
 {
     auto begin = std::chrono::high_resolution_clock::now();
     King_T
-    ll t = 1;
-    //cin >> t;
-    while (t--)
+    ll tt = 1;
+    //cin >> tt;
+    while (tt--)
     {
         idharDekh();
     }

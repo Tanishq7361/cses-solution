@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 30-06-2025
+// Date : 11-07-2025
 // problem : minimizing coins
 
 #include <bits/stdc++.h>
@@ -8,6 +8,7 @@ using namespace std;
 
 #define ll long long int
 #define vll vector<long long int>
+const ll MOD=1e9 +7;
 int main()
 {
     ll n,k;
@@ -17,23 +18,24 @@ int main()
         cin>>a[i];
     }
     if(k==0){cout<<0<<endl;return 0;}
-    vector<bool>vis(1e6+1,false);
-    queue<pair<ll,ll>>pq;
+    vector<ll>vis(1e6+1,0);
+    priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>>pq;
     pq.push({0,0});
+    vis[0]=1;
     while(!pq.empty()){
-        ll z=pq.front().first;
-        ll ct=pq.front().second;
+        ll z=pq.top().first;
+        ll ct=pq.top().second;
         pq.pop();
         for(auto x:a){
-            if(z+x <=k && !vis[z+x]){
-                if(z+x == k){
-                    cout<<ct+1<<endl;
-                    return 0;
-                }
-                vis[z+x]=true;
+            if(z+x <=k){
+                vis[z+x]+=vis[z];
+                vis[z+x]%=MOD;
                 pq.push({z+x,ct+1});
             }
         }
     }
-    cout<<-1<<endl;
+    for(int i=0;i<k;i++){
+        cout<<vis[i]<<' ';
+    }
+    cout<<vis[k-1]<<endl;
 }
