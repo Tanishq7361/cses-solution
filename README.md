@@ -29,14 +29,14 @@ The problems are organized into different categories as listed on the CSES site.
 |----------|--------|
 | Introductory Problems | 23 |
 | Sorting and Searching | 28 |
-| Dynamic Programming | 3 |
+| Dynamic Programming | 4 |
 | Graph Algorithms | 19 |
 | Interactive Problems | 1 |
 | Mathematics | 9 |
 | Range Queries | 5 |
 | String Algorithm | 1 |
 | Bitwise Operation | 1 |
-| Sliding Window | 4 |
+| Sliding Window | 7 |
 <!--PROGRESS_END-->
 
 ## 📂 How to Use
