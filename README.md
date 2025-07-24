@@ -4,23 +4,12 @@ This repository contains my solutions to the [CSES Problem Set](https://cses.fi/
 
 ## 📁 Repository Structure
 
-The problems are organized into different categories as listed on the CSES site. Each file is named according to the problem title for clarity.
+The problems are organized into different categories as listed on the CSES site. Each file is named according to the problem Number for clarity.
 
-
-> Language used: **C++20**
-
----
-
-## 📌 Topics Covered
-
-- ✅ Introductory Problems  
-- 🔄 Sorting and Searching  
-- 🧠 Dynamic Programming  
-- 🌐 Graph Algorithms  
-- ⏱ Range Queries  
-- 💡 Additional Problems coming soon...
+> Language used: **C++23**
 
 ---
+
 ## 📈 CSES Progress
 
 <!--PROGRESS_START-->
@@ -48,4 +37,3 @@ cd cses-solutions
 
 g++ -std=c++17 cses/Introductory Problems/weird_algorithm.cpp -o output
 ./output
-
