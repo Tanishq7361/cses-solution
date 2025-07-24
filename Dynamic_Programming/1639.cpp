@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 // Date : 24-07-2025
-// problem : Book Shop
+// problem : Edit Distance
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
@@ -14,24 +14,23 @@ using namespace __gnu_pbds;
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    ll n,m;
-    cin>>n>>m;
-    vll a(n);
-    vll b(n);
-    for(int i=0;i<n;i++){
-        cin>>a[i];
-    }
-    for(int i=0;i<n;i++){
-        cin>>b[i];
-    }
-    vector<vector<ll>>dp(n+1,vector<ll>(n+1));
+    string s1,s2;
+    cin>>s1>>s2;
+    ll n=s1.size();
+    ll m=s2.size();
+    vll prev(m+1),curr(m+1);
+    for(int i=0;i<=m;i++){prev[i]=i;}
     for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            dp[i][j]=dp[i-1][j];
-            if(a[i]<=j){
-                dp[i][j]=max(dp[i][j-a[i]]+b[i],dp[i-1][j]);
+        curr[0]=i;
+        for(int j=1;j<=m;j++){
+            if(s1[i-1]==s2[j-1]){
+                curr[j]=prev[j-1];
+            }
+            else{
+                curr[j]=1+min({curr[j-1],prev[j],prev[j-1]});
             }
         }
+        prev=curr;
     }
-    cout<<dp[n][n]<<endl;
+    cout<<prev[m]<<endl;
 }
