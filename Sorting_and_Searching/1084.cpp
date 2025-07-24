@@ -9,39 +9,35 @@ using namespace std;
 #define vll vector<long long int>
 int main()
 {
-    ll n, m, k;
-    cin >> n >> m >> k;
-    ll b[n], c[m];
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> b[i];
+    ll n,m,k;
+    cin>>n>>m>>k;
+    vll a(n);
+    vll b(m);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    for (ll i = 0; i < m; i++)
-    {
-        cin >> c[i];
+    for(int i=0;i<m;i++){
+        cin>>b[i];
     }
-    sort(b, b + n);
-    sort(c, c + m);
-    ll j = 0, p = 0;
-    ll ans = 0;
-
-    while (j < n && p < m)
-    {
-        if (b[j] - c[p] <= k && b[j] - c[p] >= -k)
-        {
+    ll low=0;
+    ll high=0;
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    ll ans=0;
+    while(low<n && high<m){
+        if(abs(a[low]-b[high])<=k){
             ans++;
-            j++;
-            p++;
+            low++;
+            high++;
         }
-        else if (b[j] - c[p] < -k)
-        {
-            j++;
+        else{
+            if(a[low]<b[high]){
+                low++;
+            }
+            else{
+                high++;
+            }
         }
-        else if (b[j] - c[p] > k)
-        {
-            p++;
-        }
-        
     }
-    cout << ans << endl;
+    cout<<ans<<endl;
 }

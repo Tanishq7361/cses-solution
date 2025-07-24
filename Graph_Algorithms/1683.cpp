@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 07-07-2025
+// Date : 21-07-2025
 // problem : Planets and Kingdoms
 
 #include <bits/stdc++.h>
@@ -9,50 +9,55 @@ using namespace std;
 #define ll long long
 #define vll vector<long long>
 
-class DSU {
-private :
-    vector<ll> parent, size, edge;
-public :
-    DSU(ll n) {
-        parent.resize(n + 1); size.assign(n + 1, 1);
-        edge.assign(n+1, 0);
-        iota(parent.begin(), parent.end(), 0);
+void dfs1(ll node,stack<ll>&st,vector<bool>&vis1,vector<ll>adj[]){
+    vis1[node]=1;
+    for(auto it:adj[node]){
+        if(!vis1[it]){
+            dfs1(it,st,vis1,adj);
+        }
     }
-    ll find(ll x) {
-        if(parent[x] == x) return x;
-        return parent[x] = find(parent[x]);
+    st.push(node);
+}
+void dfs2(ll node,map<ll,ll>&mpp,vector<ll>adjT[],vector<bool>&vis2,ll scc){
+    mpp[node]=scc;
+    vis2[node]=true;
+    for(auto it:adjT[node]){
+        if(!vis2[it]){
+            dfs2(it,mpp,adjT,vis2,scc);
+        }
     }
-    void unite(ll x, ll y) {
-        x = find(x), y = find(y);
-        if(x != y) {
-            if(size[x] < size[y]) { swap(x, y); }
-            parent[y] = x; size[x] += size[y];
-            edge[x] += edge[y] + 1;
-        } else { edge[x]++; }
-    }
-    ll componentCount(ll n) {
-        ll count = 0;
-        for(ll i=1;i<=n;i++) { if(find(i) == i) count++; }
-        return count;
-    }
-    bool isSame(ll x, ll y) { return find(x) == find(y); }
-    ll getSize(ll x) { return size[find(x)]; }
-    ll getEdgeCount(ll x) { return edge[find(x)]; }
-};
+}
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n,m;
     cin>>n>>m;
-    DSU ds1(n);
-    vector<ll>adj[n+1];
+    vector<ll>adj[n+1],adjT[n+1];
     for(int i=0;i<m;i++){
         ll x,y;
         cin>>x>>y;
         adj[x].push_back(y);
+        adjT[y].push_back(x);
     }
+    vector<bool>vis1(n+1),vis2(n+1);
+    stack<ll>st;
     for(int i=1;i<=n;i++){
-        
+        if(!vis1[i]){
+            dfs1(i,st,vis1,adj);
+        }
     }
-
+    ll scc=0;
+    map<ll,ll>mpp;
+    while(!st.empty()){
+        ll z=st.top();
+        st.pop();
+        if(!vis2[z]){
+            scc++;
+            dfs2(z,mpp,adjT,vis2,scc);
+        }
+    }
+    cout<<scc<<endl;
+    for(int i=1;i<=n;i++){
+        cout<<mpp[i]<<' ';
+    }
 }

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 // Date : 22-07-2025
-// problem : Coin Combinations I
+// problem : Coin Combinations II
 
 #include <bits/stdc++.h>
 using namespace std;

@@ -1,6 +1,8 @@
+// created: 24.07.2025
+
 #include <bits/stdc++.h>
 using namespace std;
-#define fastio ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);   
+
 #define endl '\n'
 #define ll long long
 #define stc static_cast
@@ -11,21 +13,40 @@ using namespace std;
 #define mll map<ll, ll>
 #define umll unordered_map<ll, ll>
 #define pb push_back
-#define ppb pop_back
-#define mp make_pair
 #define bitcount __builtin_popcountll
 #define ff first
 #define ss second
 #define yes cout << "YES\n"
 #define no cout << "NO\n"
 #define one cout << "1\n"
+#define mone cout << "-1\n"
+#define zr cout << "0\n"
+#define et cout << endl
+#define rr return
 #define fr(i, l, r) for (ll i = (l); i < (r); i++)
 #define frr(i, r, l) for (ll i = (r - 1); i >= l; i--)
 #define maxhp(T) priority_queue<T>
 #define minhp(T) priority_queue<T, vector<T>, greater<T>>
-const ll INF = 1e18 + 9;
-const ll MOD = 1e9 + 7;
-const ll MOD1 = 998244353;
+#define vin(a, n)              \
+    vll a(n);                  \
+    for (ll i = 0; i < n; i++) \
+        cin >> a[i];
+#define vvin(a, n, m)              \
+    vvll a(n, vll(m));             \
+    for (ll i = 0; i < n; i++)     \
+    {                              \
+        for (ll j = 0; j < m; j++) \
+        {                          \
+            cin >> a[i][j];        \
+        }                          \
+    }
+#define vout(a)           \
+    for (auto x : a)      \
+    {                     \
+        cout << x << ' '; \
+    }                     \
+    cout << '\n';
+#define out(a) cout << a << '\n';
 #define sze(x) ll((x).size()) 
 #define all(x) (x).begin(), (x).end()
 #define srt(x) sort((x).begin(), (x).end())
@@ -35,6 +56,13 @@ const ll MOD1 = 998244353;
 #define minval(v) *min_element((v).begin(), (v).end())
 #define maxid(v) max_element((v).begin(), (v).end()) - ((v).begin())
 #define minid(v) min_element((v).begin(), (v).end()) - ((v).begin())
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+const ll MOD = 1e9 + 7;
+const ll MOD1 = 998244353;
+
+// rotate(v.begin(),v.begin()+v.size()-r,v.end()); for rotating vector r times right
+// rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
 
 inline bool isPrime(ll n) {
     if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
@@ -68,17 +96,40 @@ inline ll ansXor(ll n){
 
 void solve()
 {
-       
+    ll n;
+    cin>>n;
+    vin(a,n);
+    vin(b,n);
+    vll prev(n+1),curr(n+1);
+    fr(i,1,n+1){
+        fr(j,1,n+1){
+            if(a[i-1]==b[j-1]){
+                curr[j]=prev[j-1]+1;
+            }
+            else{
+                curr[j]=max(curr[j-1],prev[j]);
+            }
+        }
+        prev=curr;
+    }
+    cout<<curr[n]<<endl;
 }
 
-int main()
-{
-    fastio;
-    ll test = 1;
-    cin >> test;
-    while (test--)
+int main(){
+    ios_base::sync_with_stdio(0);cin.tie(0); cout.tie(0);\
+    auto begin = std::chrono::high_resolution_clock::now();
+    //cout << fixed << setprecision(10);
+    cerr << fixed << setprecision(10);
+    ll tt = 1;
+    //cin >> tt;
+    // freopen("input.txt",  "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    while (tt--)
     {
         solve();
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+    cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n";
     return 0;
 }

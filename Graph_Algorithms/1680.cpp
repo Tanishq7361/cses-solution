@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 01-07-2025
-// problem : 
+// Date : 21-07-2025
+// problem : Longest Flight Route
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,47 +9,57 @@ using namespace std;
 #define ll long long
 #define vll vector<long long>
 
-int main()
-{
-    int t;
-    cin>>t;
-    while(t--){
-        int n;
-        cin>>n;
-        vector<int> a(n);
-        for(int i=0;i<n;i++){
-            cin>>a[i];
+int main(){
+    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    ll n,m;
+    cin>>n>>m;
+    vll adj[n+1];
+    vll par(n+1);
+    par[1]=1;
+    vll indegree(n+1);
+    for(int i=0;i<n;i++){
+        ll x,y;
+        cin>>x>>y;
+        adj[x].push_back(y);
+        indegree[y]++;
+    }
+    queue<pair<ll,ll>>q;
+    vll vis(n+1);
+    for(int i=1;i<=n;i++){
+        if(indegree[i]==0){
+            q.push({i,1});
+            par[i]=i;
         }
-        vector<pair<ll,ll>> inx(n);
-        for(int i=0;i<n;i++){
-            inx[i]={a[i],i};
-        }
-        sort(inx.begin(),inx.end());
-        vll mx(n);
-        ll ans=0;
-        mx[n-1]=inx[n-1].second;
-        for(int i=n-2;i>=0;i--){
-            mx[i]=max(mx[i+1],inx[i].second);
-        }
-        for(int i=0;i<n;i++){
-            ll z=a[i];
-            ll low=0,high=n-1;
-            ll final=-1;
-            while(low<=high){
-                ll mid=(low+high)/2;
-                if(inx[mid].first<=z){
-                    low=mid+1;
-                }
-                else{
-                    final=mx[mid];
-                    high=mid-1;
-                }
+    }
+    while(!q.empty()){
+        ll node=q.front().second;
+        ll dist=q.front().first;
+        q.pop();
+        for(auto x:adj[node]){
+            indegree[x]--;
+            if(indegree[x]==0){
+                par[x]=node;
+                q.push({dist+1,x});
             }
-            if(final==-1){
-                continue;
-            }
-            ans=max(ans,final-i+1);
         }
-        cout<<ans<<endl;
+    }
+    vll ans;
+    vector<bool>vis2(n+1);
+    ll temp=n;
+    while(temp!=1){
+        if(vis2[temp]){
+            cout<<"IMPOSSIBLE"<<endl;
+            return 0;
+        }
+        ans.push_back(temp);
+        vis2[temp]=true;
+        temp=par[temp];
+
+    }
+    ans.push_back(1);
+    reverse(ans.begin(),ans.end());
+    cout<<ans.size()<<endl;
+    for(auto x:ans){
+        cout<<x<<' ';
     }
 }

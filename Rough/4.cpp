@@ -1,5 +1,4 @@
-// use iff needed
-// created: 08.07.2025
+// created: 22.07.2025
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
@@ -130,7 +129,7 @@ const long long  MOD1 = 998244353;
 // Use "set_name".max_load_factor(0.25);"set_name".reserve(512); with unordered set
 // Or use gp_hash_table<X,null_type>
 
-void idharDekh()
+void solve()
 {
     
 }
@@ -141,11 +140,11 @@ signed main()
     //cout << fixed << setprecision(25);
     cerr << fixed << setprecision(10);
     auto start = std::chrono::high_resolution_clock::now();
-    ll t = 1;
-    cin >> t;
-    while (t--)
+    ll tt = 1;
+    cin >> tt;
+    while (tt--)
     {
-        idharDekh();
+        solve();
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);

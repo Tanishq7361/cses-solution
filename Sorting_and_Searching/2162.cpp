@@ -1,28 +1,25 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 31-01-2025
-// problem : Josephus Problem I
+// Date : 14-07-2025
+// problem : Josephus Problem 1
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long int
-#define vll vector<long long int>
-int main()
-{
-    ll q;
-    cin>>q;
-    while(q--){
-        ll n,k;
-        cin>>n>>k;
-        if(n==1){
-            cout<<1<<endl;
-        }
-        else if(k==1){
-            cout<<2<<endl;
-        }
-        else{
-            cout<<(2*(n-pow(2,floor(log2(n)))))+1<<endl;
-        }
+#define ll long long
+#define vll vector<long long>
+
+int main(){
+    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    ll n;
+    cin>>n;
+    ll temp=n;
+    ll temp2=n;
+    ll j=2;
+    ll ct=2;
+    while(n--){
+        cout<<j%temp<<' ';
+        j+=ct;
+        if(j>temp2){ct*=2;j+=temp;temp2+=temp;}
     }
 }

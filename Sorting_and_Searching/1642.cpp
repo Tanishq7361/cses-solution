@@ -17,42 +17,37 @@ int main(){
     multimap<ll,ll>mpp;
     for(int i=0;i<n;i++){
         cin>>a[i];
+        mpp.insert({a[i],i+1});
     }    
-    ll low=0,high=n-1;
-    while(low<=high){
-        ll mid=(low+high)/2;
-        ll fin=x-a[mid];
-        for(int i=mid+1;i<n;i++){
-            mpp.insert({a[i],i});
-        }
-        if(x<0){
-            high=mid-1;
-            continue;
-        }
-        for(int i=mid+1;i<n;i++){
-            ll ans=fin-a[i];
-            mpp.erase(mpp.find(a[i]));
-            for(int j=i+1;j<n;j++){
-                ll z=ans-a[j];
-                if(2*z ==ans){
-                    if(mpp.count(z)>1){
-                        mpp.erase(mpp.find(z));
-                        auto it=mpp.find(z);
-                        cout<<mid+1<<' '<<i+1<<' '<<j+1<<' '<<(*it).second+1;
-                        return 0;
-                    }
+    sort(a.begin(),a.end());
+    for(int i=0;i<n-3;i++){
+        if(i!=0 && a[i]==a[i-1]){continue;}
+        for(int j=i+1;j<n-2;j++){
+            if(j!=i+1 && a[j]==a[j-1]){continue;}
+            ll req=x-a[i]-a[j];
+            ll low=j+1,high=n-1;
+            while(low<high){
+                ll have=a[low]+a[high];
+                if(have==req){
+                    auto it1=mpp.find(a[i]);
+                    mpp.erase(mpp.find(a[i]));
+                    auto it2=mpp.find(a[j]);
+                    mpp.erase(mpp.find(a[j]));
+                    auto it3=mpp.find(a[low]);
+                    mpp.erase(mpp.find(a[low]));
+                    auto it4=mpp.find(a[high]);
+                    mpp.erase(mpp.find(a[high]));
+                    cout<<it1->second<<' '<<it2->second<<' '<<it3->second<<' '<<it4->second<<endl;
+                    return 0;
+                }
+                else if(have<req){
+                    low++;
                 }
                 else{
-                    if(mpp.count(z)>0){
-                        auto it=mpp.find(z);
-                        cout<<mid+1<<' '<<i+1<<' '<<j+1<<' '<<(*it).second+1;
-                        return 0;
-                    }
+                    high--;
                 }
             }
         }
-        high=mid-1;
     }
     cout<<"IMPOSSIBLE"<<endl;
-     
 }

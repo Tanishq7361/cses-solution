@@ -1,21 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
-
+ 
 // Date : 10-07-2025
 // problem : Nested Ranges Check
-
+ 
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 #define ll long long
 #define vll vector<long long>
-
-bool comp(pair<ll,ll>&a,pair<ll,ll>&b){
-    if(a.first==b.first){
-        return a.second>b.second;
-    }
-    return a.first<b.first;
-}
-
+ 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n;
@@ -28,9 +21,9 @@ int main(){
         a[i]={x,y};
         mpp[{x,y}]=i+1;
     }
-    sort(a.begin(),a.end(),comp);
+    sort(a.begin(),a.end());
     vector<pair<ll,ll>>ans(n);
-    if(a[n-1].first==a[n-1].first){
+    if(a[0].first==a[1].first){
         ans[mpp[a[0]]-1].second=1;
     }
     else{
@@ -46,7 +39,7 @@ int main(){
         }
         mx=max(mx,a[i].second);
     }
-    sort(a.begin(),a.end());
+    //sort(a.begin(),a.end());
     if(a[n-1].first==a[n-2].first){
         ans[mpp[a[n-1]]-1].first=1;
     }

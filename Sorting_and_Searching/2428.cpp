@@ -4,7 +4,10 @@
 // problem : Distinct Value subarray 2
 
 #include <bits/stdc++.h>
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
+using namespace __gnu_pbds;
 
 #define ll long long
 #define vll vector<long long>
@@ -13,48 +16,33 @@ int main()
     ll n,k;
     cin>>n>>k;
     vll a(n);
-    unordered_map<ll,ll>mpp;
-    unordered_set<ll>st;
+    map<ll,ll>mpp;
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
     ll low=0,high=0;
     ll ans=0;
     while(high<n){
-        if(st.size()<=k){
-            ans++;
-            st.insert(a[high]);
+        if(mpp.size()<k){
             mpp[a[high]]++;
-            high++;
         }
-        else{
-            while(st.size()>k){
-                if(mpp[a[low]]==1){
-                    st.erase(mpp[a[low]]);
+        else if(mpp.size()==k){
+            if(mpp.find(a[high])==mpp.end()){
+                while(mpp.size()==k){
+                    ans+=high-low;
+                    mpp[a[low]]--;
+                    if(mpp[a[low]]==0){
+                        mpp.erase(a[low]);
+                    }
+                    low++;
                 }
-                mpp[a[low]]--;
-                low++;
             }
+            mpp[a[high]]++;
         }
+        high++;
     }
-    while(low<high){
-        if(st.size()<=k){
-            ans++;
-            if(mpp[a[low]]==1){
-                st.erase(mpp[a[low]]);
-            }
-            mpp[a[low]]--;
-            low++;
-        }
-        else{
-            while(st.size()>k){
-                if(mpp[a[low]]==1){
-                    st.erase(mpp[a[low]]);
-                }
-                mpp[a[low]]--;
-                low++;
-            }
-        }
+    for(int i=low;i<n;i++){
+        ans+=high-i;
     }
     cout<<ans<<endl;
 }

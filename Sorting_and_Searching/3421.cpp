@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 09-07-2025
-// problem : Room Allocation
+// Date : 21-07-2025
+// problem : Distinct Values Subsequences
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -50,7 +50,7 @@ inline ll power(ll a, ll b, ll mod = MOD) { ll ans = 1; a %= mod; while(b > 0) {
 inline bool isPowOfTwo(ll n) { return ((n > 0) && !(n & (n - 1))); }
 inline bool isPerfectSq(ll n) { if(n < 0) return false; ll sr = static_cast<ll>(sqrt(n)); return (sr*sr == n); }
 inline bool compbyss(pair<ll, ll> a, pair<ll, ll> b) { return a.second < b.second; }
-inline bool comprev(pair<ll,ll> a, pair<ll,ll> b){if(a.ff==b.ff){return a.ss<b.ss;} else{return a.ff<b.ff;}}
+inline bool comprev(pair<ll,ll> a, pair<ll,ll> b){if(a.ff==b.ff){return a.ss<b.ss;} else{return a.ff>b.ff;}}
 inline ll modadd(ll a, ll b, ll mod = MOD) { return ((a % mod + b % mod) % mod); }
 inline ll modmult(ll a, ll b, ll mod = MOD) { return ((a % mod * b % mod) % mod); }
 inline ll modinv(ll a, ll mod = MOD) { return power(a, mod - 2, mod); }
@@ -75,45 +75,21 @@ int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n;
     cin>>n;
-    vector<pair<ll,pair<char,ll>>>a(2*n);
-    multimap<pair<ll,ll>,ll>mpp2,mpp1;
-    vll ans(n);
-    for(int i=0;i< 2*n;i+=2){
-        ll x,y;
-        cin>>x>>y;
-        a[i]={x,{'A',y}};
-        a[i+1]={y,{'D',x}};
-        mpp2.insert({{x,y},i/2});
-        mpp1.insert({{x,y},i/2});
+    vll a(n);
+    map<ll,ll>mpp;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        mpp[a[i]]++;
     }
-    sort(a.begin(),a.end());
-    ll ct=0;
-    ll mx=0;
-    for(int i=0;i< 2*n;i++){
-        if(a[i].ss.ff=='A'){
-            ct++;
-            mx=max(ct,mx);
-        }
-        else{
-            ct--;
+    ll ans=0;
+    for(int i=0;i<n;i++){
+        ll z=mpp.size();
+        ll temp=n-i-a[i];
+        ans=modadd(ans,power(2,z-1));
+        mpp[a[i]]--;
+        if(mpp[a[i]]==0){
+            mpp.erase(a[i]);
         }
     }
-    cout<<mx<<endl;
-    queue<ll>q;
-    fr(i,1,mx+1){
-        q.push(i);
-    }
-    for(int i=0;i< 2*n;i++){
-        if(a[i].ss.ff=='A'){
-            auto it = mpp2.find({a[i].ff,a[i].ss.ss});
-            mpp2.erase(mpp2.find({a[i].ff,a[i].ss.ss}));
-            ans[it->second]=q.front();
-            q.pop();
-        }
-        else{
-            ll z=ans[mpp2[{a[i].ff,a[i].ss.ss}]];
-            q.push(z);
-        }
-    }
-    fr(i,0,n){cout<<ans[i]<<' ';}
+    cout<<ans<<endl;
 }
