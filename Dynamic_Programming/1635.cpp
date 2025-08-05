@@ -19,13 +19,14 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    vll curr(x+1);
-    curr[0]=1;
-    for(int i=0;i<n;i++){
-        for(int j=a[i];j<=x;j++){
-            curr[j]+=curr[j-a[i]];
-            curr[j]%=mod;
+    vll dp(x+1);
+    dp[0]=1;
+    for(int i=1;i<=x;i++){
+        for(int j=0;j<n;j++){
+            if(a[j]>i){continue;}
+            dp[i]+=dp[i-a[j]];
+            dp[i]%=mod;
         }
     }
-    cout<<curr[x]<<endl;
+    cout<<dp[x]<<endl;
 }

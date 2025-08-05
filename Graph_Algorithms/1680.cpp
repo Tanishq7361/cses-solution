@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 21-07-2025
+// Date : 31-07-2025
 // problem : Longest Flight Route
 
 #include <bits/stdc++.h>
@@ -14,52 +14,62 @@ int main(){
     ll n,m;
     cin>>n>>m;
     vll adj[n+1];
-    vll par(n+1);
-    par[1]=1;
-    vll indegree(n+1);
-    for(int i=0;i<n;i++){
+    vector<bool>vis(n+1);
+    vll indeg(n+1);
+    for(int i=0;i<m;i++){
         ll x,y;
         cin>>x>>y;
         adj[x].push_back(y);
-        indegree[y]++;
+        indeg[y]++;
     }
-    queue<pair<ll,ll>>q;
-    vll vis(n+1);
+    queue<ll>q;
     for(int i=1;i<=n;i++){
-        if(indegree[i]==0){
-            q.push({i,1});
-            par[i]=i;
+        if(indeg[i]==0){
+            q.push(i);
         }
     }
-    while(!q.empty()){
-        ll node=q.front().second;
-        ll dist=q.front().first;
-        q.pop();
-        for(auto x:adj[node]){
-            indegree[x]--;
-            if(indegree[x]==0){
-                par[x]=node;
-                q.push({dist+1,x});
+    vll par(n+1);
+    vll dp(n+1);
+    
+    for(int i=1;i<=n;i++){
+        if(!vis[i]){
+            q.push(i);
+        }
+        bool f1=false;
+        while(!q.empty()){
+            ll node=q.front();
+            vis[node]=true;
+            if(node==n){
+                f1=true;
+                break;
             }
+            q.pop();
+            for(auto x:adj[node]){
+                indeg[x]--;
+                if(indeg[x]==0){
+                    par[x]=node;
+                    q.push(x);
+                }
+            }
+        }
+        if(f1){
+            break;
         }
     }
     vll ans;
-    vector<bool>vis2(n+1);
-    ll temp=n;
-    while(temp!=1){
-        if(vis2[temp]){
-            cout<<"IMPOSSIBLE"<<endl;
-            return 0;
-        }
-        ans.push_back(temp);
-        vis2[temp]=true;
-        temp=par[temp];
-
+    ll z=n;
+    while(z!=0){
+        ans.push_back(z);
+        cout<<z<<endl;
+        z=par[z];
     }
-    ans.push_back(1);
     reverse(ans.begin(),ans.end());
+    if(ans.size()==0 || ans[0]!=1){
+        cout<<"IMPOSSIBLE"<<endl;
+        return 0;
+    }
     cout<<ans.size()<<endl;
-    for(auto x:ans){
+    for(auto x:par){
         cout<<x<<' ';
     }
 }

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 04-08-2025
-// problem : Book Shop
+// Date : 25-07-2025
+// problem : Money Sums
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
@@ -14,30 +14,28 @@ using namespace __gnu_pbds;
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    ll n,x;
-    cin>>n>>x;
-    vll a(n),b(n);
+    ll n;
+    cin>>n;
+    vll a(n);
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    for(int i=0;i<n;i++){
-        cin>>b[i];
-    }
-    vector<ll>dp(x+1);
-    dp[0]=0;
-    dp[a[0]]=b[0];
+    vector<bool>ans(1e6+1,false);
+    ans[a[0]]=true;
+    ans[0]=true;
     for(int i=1;i<n;i++){
-        for(int j=x;j>=a[i];j--){
-            dp[j]=max(dp[j],dp[j-a[i]]+b[i]);
-            // cout<<i<<' '<<j<<' '<<dp[j]<<endl;
+        for(int j=1e6;j>=a[i];j--){
+            ans[j]=ans[j-a[i]]|ans[j];
         }
     }
-    ll mx=0;
-    for(int i=0;i<=x;i++){
-        if(dp[i]!=INT_MAX){
-            mx=max(mx,dp[i]);
+    vll final;
+    for(int i=1;i<=1e6;i++){
+        if(ans[i]){
+            final.push_back(i);
         }
-        // cout<<dp[i]<<' ';
     }
-    cout<<mx<<endl;
+    cout<<final.size()<<endl;
+    for(auto x:final){
+        cout<<x<<' ';
+    }
 }

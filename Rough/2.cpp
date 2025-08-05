@@ -1,63 +1,20 @@
-// created: 22.07.2025
+// created: 05.08.2025
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
 #include "ext/pb_ds/tree_policy.hpp"
+
 using namespace std;
 using namespace __gnu_pbds;
-///////////////////////////////////////////////////////////////////////////////////////////////
+
 template<class T> 
 using ordered_set = tree<T, null_type,less<T>, rb_tree_tag, tree_order_statistics_node_update> ;
 template<class key, class value, class cmp = std::less<key>>
 using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
+
 // .find_by_order(k)  returns iterator to kth element starting from 0;
 // .order_of_key(k) returns count of elements strictly smaller than k;
 
-template<class T> istream& operator >> (istream &is, vector<T>& V) {
-    for(auto &e : V)
-        is >> e;
-    return is;
-}
-template<typename CharT, typename Traits, typename T>
-ostream& _containerprint(std::basic_ostream<CharT, Traits> &out, T const &val) {
-    return (out << val << " ");
-}
-template<typename CharT, typename Traits, typename T1, typename T2>
-ostream& _containerprint(std::basic_ostream<CharT, Traits> &out, pair<T1, T2> const &val) {
-    return (out << "(" << val.first << "," << val.second << ") ");
-}
-template<typename CharT, typename Traits, template<typename, typename...> class TT, typename... Args>
-ostream& operator << (std::basic_ostream<CharT, Traits> &out, TT<Args...> const &cont) {
-    out << "[ ";
-    for(auto&& elem : cont) _containerprint(out, elem);
-    return (out << "]");
-}
-template<class L, class R> ostream& operator << (ostream& out, pair<L, R> const &val){
-    return (out << "(" << val.first << "," << val.second << ") ");
-}
-template<typename L, size_t N> ostream& operator << (ostream& out, array<L, N> const &cont){
-    out << "[ ";
-    for(auto&& elem : cont) _containerprint(out, elem);
-    return (out << "]");    
-}
-template<class T> ostream& operator<<(ostream &out, ordered_set<T> const& S){
-    out << "{ ";
-    for(const auto& s:S) out << s << " ";
-    return (out << "}");
-}
-template<class L, class R, class chash = std::hash<L> > ostream& operator << (ostream &out, gp_hash_table<L, R, chash> const& M) {
-    out << "{ ";
-    for(const auto& m: M) out << "(" << m.first << ":" << m.second << ") ";
-    return (out << "}");
-}
-template<class P, class Q = vector<P>, class R = less<P> > ostream& operator << (ostream& out, priority_queue<P, Q, R> const& M){
-    static priority_queue<P, Q, R> U;
-    U = M;
-    out << "{ ";
-    while(!U.empty())
-        out << U.top() << " ", U.pop();
-    return (out << "}");
-}
 #define TRACE
 #ifdef TRACE
     #define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
@@ -74,7 +31,7 @@ template<class P, class Q = vector<P>, class R = less<P> > ostream& operator << 
 #else
     #define trace(...) 1
 #endif
-struct custom_hash { 
+struct custom_hash { //to avoid TLE due to collision in unordered_map
     static uint64_t splitmix64(uint64_t x) {
         x += 0x9e3779b97f4a7c15;
         x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
@@ -91,18 +48,24 @@ struct custom_hash {
         return splitmix64(Y.first * 31 + Y.second + FIXED_RANDOM);
     }
 };
-///////////////////////////////////////////////////////////////////////////////////////////////
+
 const long long  MOD = 1e9 + 7;
 const long long  MOD1 = 998244353;
+const int N=1e6;
 
 #define endl '\n'
 #define ll long long
 #define stc static_cast
 #define vll vector<ll>
+#define vvll vector<vector<ll>>
+#define vpll vector<pair<ll,ll>>
 #define pll pair<ll, ll>
+#define ppll pair<pair<ll,ll>,ll>
+#define pllp pair<ll,pair<ll,ll>>
+#define umll unordered_map<ll,ll,custom_hash>
 #define pb push_back
 #define ppb pop_back
-#define bitcount __builtin_popcountll
+#define bitcnt __builtin_popcountll
 #define ff first
 #define ss second
 #define yes cout << "YES\n"
@@ -124,25 +87,99 @@ const long long  MOD1 = 998244353;
 #define maxid(v) max_element((v).begin(), (v).end()) - ((v).begin())
 #define minid(v) min_element((v).begin(), (v).end()) - ((v).begin())
 
+#define in(T,n) \
+    T n;     \
+    cin >> n
+#define in2(T,n,k) \
+    T n, k;      \
+    cin >> n >> k
+#define in3(T,a,b,c) \
+    T a, b, c;      \
+    cin >> a >> b >> c
+#define in4(T,a,b,c,d) \
+    T a, b, c, d;      \
+    cin >> a >> b >> c >> d
+#define vin(a, n)              \
+    vll a(n);                  \
+    for (ll i = 0; i < n; i++) \
+        cin >> a[i];
+#define vvin(a, n, m)              \
+    vvll a(n, vll(m));             \
+    for (ll i = 0; i < n; i++)     \
+    {                              \
+        for (ll j = 0; j < m; j++) \
+        {                          \
+            cin >> a[i][j];        \
+        }                          \
+    }                              
+#define vout(a)           \
+    for (auto x : a)      \
+    {                     \
+        cout << x << ' '; \
+    }                     \
+    cout << '\n';
+#define vpout(a)           \
+    for (pair<ll,ll> x : a)      \
+    {                     \
+        cout << x.ff << ' '<<x.ss<<endl; \
+    }                     \
+    cout << '\n';
+#define o1(a) cout << a << '\n'
+#define o2(a, b) cout << a << ' ' << b << '\n'
+#define o3(a, b, c) cout << a << ' ' << b << ' ' << c << '\n'
+#define o4(a, b, c, d) cout << a << ' ' << b << ' ' << c << ' ' << d << '\n'
+
+
 // rotate(v.begin(),v.begin()+v.size()-r,v.end()); for rotating vector r times right
 // rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
 // Use "set_name".max_load_factor(0.25);"set_name".reserve(512); with unordered set
 // Or use gp_hash_table<X,null_type>
 
 
+inline bool isPrime(ll n) {
+    if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
+    for(ll i=5; i*i<=n; i+=6) { if(n % i == 0 || n % (i+2) == 0) return false; } return true;}
+inline ll power(ll a, ll b, ll mod = MOD) { ll ans = 1; a %= mod; while(b > 0) { if(b & 1) { ans = (ans * a) % mod; } a = (a * a) % mod; b >>= 1; } return ans; }
+inline bool isPowOfTwo(ll n) { return ((n > 0) && !(n & (n - 1))); }
+inline bool isPerfectSq(ll n) { if(n < 0) return false; ll sr = static_cast<ll>(sqrt(n)); return (sr*sr == n); }
+inline bool compbyss(pair<ll, ll> a, pair<ll, ll> b) { return a.second < b.second; }
+inline bool comprev(pair<ll,ll> a, pair<ll,ll> b){if(a.ff==b.ff){return a.ss<b.ss;} else{return a.ff>b.ff;}}
+inline ll modadd(ll a, ll b, ll mod = MOD) { return ((a % mod + b % mod) % mod); }
+inline ll modmult(ll a, ll b, ll mod = MOD) { return ((a % mod * b % mod) % mod); }
+inline ll modinv(ll a, ll mod = MOD) { return power(a, mod - 2, mod); }
+inline ll moddiv(ll a, ll b, ll mod = MOD) { return modmult(a, modinv(b, mod), mod); }
+inline ll msbPos(ll n){ if (n == 0) return -1; return(63 - (__builtin_clzll(n)));}
+inline ll gcd(ll a, ll b) { if(b == 0) return a; return gcd(b, a % b); }
+inline ll lcm(ll a, ll b) { return (a / gcd(a, b) * b); }
+inline ll getBit(ll n, ll pos) { return ((n >> pos) & 1); }
+inline ll setBit(ll n, ll pos) { return (n | (1 << pos)); }
+inline ll clearBit(ll n, ll pos) { return (n & (~(1 << pos))); }
+inline ll toggleBit(ll n, ll pos) { return (n ^ (1 << pos)); }
+inline ll turnOffRightmostSetBit(ll n) { return (n & (n - 1)); }
+inline bool isBitSet(ll n, ll p) { return (n & (1LL << p)) != 0; }
+inline ll ansXor(ll n){
+    if (n % 4 == 0) return n;
+    if (n % 4 == 1) return 1;
+    if (n % 4 == 2) return n + 1;
+    return 0;
+}
+inline ll cntinv(vll &a){
+    ordered_set<ll> s;
+    ll ans = 0;
+    ll z = a.size();
+    frr(i, z, 0){
+        ans += s.order_of_key(a[i]);
+        s.insert(a[i]);
+    }
+    return ans;
+}
+
 
 void solve()
 {
-    ll l,r;
-    cin>>l>>r;
-    ll ans=0;
-    ans-=((r/2) - (l-1)/2) + ((r/3) - (l-1)/3) + ((r/5) - (l-1)/5) + ((r/7) - (l-1)/7);
-    ans+=((r/6) - (l-1)/6) + ((r/15) - (l-1)/15) + ((r/10) - (l-1)/10) + ((r/14) - (l-1)/14) + ((r/21) - (l-1)/21) + ((r/35) - (l-1)/35);
-    ans-=((r/30) - (l-1)/30) + ((r/105) - (l-1)/105) + ((r/42) - (l-1)/42) + ((r/70) - (l-1)/70);
-    ans+=((r/210) - (l-1)/210);
-    ans+=r-l+1;
-    cout<<ans<<endl;
+    
 }
+
 
 signed main()
 {

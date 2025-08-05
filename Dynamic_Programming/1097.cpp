@@ -1,21 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 09-07-2025
-// problem : Traffic Lights
+// Date : 04-08-2025
+// problem : Removal Game
 
 #include <bits/stdc++.h>
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
+using namespace __gnu_pbds;
 
 #define ll long long
 #define vll vector<long long>
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    ll k,n;
-    cin>>k>>n;
-    vll a(n);
-    priority_queue<pair<ll,pair<ll,ll>>,vector<pair<ll,pair<ll,ll>>>,greater<pair<ll,pair<ll,ll>>>pq;
-    pq.push({,{0,k}});
-
-
 }
