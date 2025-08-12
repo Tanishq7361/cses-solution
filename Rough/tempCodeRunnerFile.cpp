@@ -1,4 +1,4 @@
-// created: 12.08.2025
+// created: 07.08.2025
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
@@ -54,24 +54,26 @@ const long long  MOD1 = 998244353;
 const int N=1e6;
 
 #define endl '\n'
-#define ll   long long
-#define stc  static_cast
-#define vll  vector<ll>
+#define ll long long
+#define stc static_cast
+#define vll vector<ll>
 #define vvll vector<vector<ll>>
 #define vpll vector<pair<ll,ll>>
-#define pll  pair<ll, ll>
+#define pll pair<ll, ll>
 #define ppll pair<pair<ll,ll>,ll>
 #define pllp pair<ll,pair<ll,ll>>
 #define umll unordered_map<ll,ll,custom_hash>
-#define mll  map<ll,ll,custom_hash>
-#define pb   push_back
+#define pb push_back
+#define ppb pop_back
 #define bitcnt __builtin_popcountll
-#define ff   first
-#define ss   second
+#define ff first
+#define ss second
 #define yes cout << "YES\n"
 #define no cout << "NO\n"
+#define one cout << "1\n"
 #define mone cout << "-1\n"
 #define zro cout << "0\n"
+#define ent cout << endl
 #define done return
 #define fr(i, l, r) for (ll i = (l); i < (r); i++)
 #define frr(i, r, l) for (ll i = (r - 1); i >= l; i--)
@@ -84,11 +86,23 @@ const int N=1e6;
 #define minval(v) *min_element((v).begin(), (v).end())
 #define maxid(v) max_element((v).begin(), (v).end()) - ((v).begin())
 #define minid(v) min_element((v).begin(), (v).end()) - ((v).begin())
+
+#define in(T,n) \
+    T n;     \
+    cin >> n
+#define in2(T,n,k) \
+    T n, k;      \
+    cin >> n >> k
+#define in3(T,a,b,c) \
+    T a, b, c;      \
+    cin >> a >> b >> c
+#define in4(T,a,b,c,d) \
+    T a, b, c, d;      \
+    cin >> a >> b >> c >> d
 #define vin(a, n)              \
     vll a(n);                  \
     for (ll i = 0; i < n; i++) \
         cin >> a[i];
-#define mem(n, i) memset(n, i, sizeof n)
 #define vvin(a, n, m)              \
     vvll a(n, vll(m));             \
     for (ll i = 0; i < n; i++)     \
@@ -99,22 +113,27 @@ const int N=1e6;
         }                          \
     }                              
 #define vout(a)           \
-    for (auto x : a){     \
+    for (auto x : a)      \
+    {                     \
         cout << x << ' '; \
     }                     \
     cout << '\n';
 #define vpout(a)           \
-    for (pair<ll,ll> x : a){\
+    for (pair<ll,ll> x : a)      \
+    {                     \
         cout << x.ff << ' '<<x.ss<<endl; \
     }                     
 #define o1(a) cout << a << '\n'
 #define o2(a, b) cout << a << ' ' << b << '\n'
 #define o3(a, b, c) cout << a << ' ' << b << ' ' << c << '\n'
+#define o4(a, b, c, d) cout << a << ' ' << b << ' ' << c << ' ' << d << '\n'
+
 
 // rotate(v.begin(),v.begin()+v.size()-r,v.end()); for rotating vector r times right
 // rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
 // Use "set_name".max_load_factor(0.25);"set_name".reserve(512); with unordered set
 // Or use gp_hash_table<X,null_type>
+
 
 inline bool isPrime(ll n) {
     if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
@@ -137,14 +156,11 @@ inline ll clearBit(ll n, ll pos) { return (n & (~(1 << pos))); }
 inline ll toggleBit(ll n, ll pos) { return (n ^ (1 << pos)); }
 inline ll turnOffRightmostSetBit(ll n) { return (n & (n - 1)); }
 inline bool isBitSet(ll n, ll p) { return (n & (1LL << p)) != 0; }
-inline ll ansXor(ll n){ return n % 4 == 0 ? n : n % 4 == 1 ? 1 : n % 4 == 2 ? n + 1 : 0; }
-vll fact,invfact;
-void precompp(ll n){
-    fact.resize(n+1),invfact.resize(n+1);
-    fact[0]=invfact[0]=1;
-    fr(i,1,n+1){fact[i]=(fact[i-1]*i)%MOD;}
-    invfact[n] = modinv(fact[n], MOD);
-    frr(i,n,1) invfact[i] = (invfact[i+1]*(i+1))%MOD;
+inline ll ansXor(ll n){
+    if (n % 4 == 0) return n;
+    if (n % 4 == 1) return 1;
+    if (n % 4 == 2) return n + 1;
+    return 0;
 }
 inline ll cntinv(vll &a){
     ordered_set<ll> s;
@@ -157,69 +173,35 @@ inline ll cntinv(vll &a){
     return ans;
 }
 
-class segtree{
-    vector<pair<ll,pll>>seg;
-public:
-    segtree(int n){
-        seg.resize(4*n +1);
-    }
-    void build(int inx, int low, int high, string&s){
-        if(low==high){
-            if(s[low]=='('){
-                seg[inx].ff=0;
-                seg[inx].ss.ss=0;
-                seg[inx].ss.ff=1;
-            }
-            else{
-                seg[inx].ff=0;
-                seg[inx].ss.ss=1;
-                seg[inx].ss.ff=0;
-            }
-            return;
-        }
-        int mid=(low+high)/2;
-        build(2*inx +1,low,mid,s);
-        build(2*inx +2,mid+1,high,s);
-        seg[inx].ff=seg[2*inx +1].ff + seg[2*inx +2].ff + min(seg[2*inx +1].ss.ff,seg[2*inx +2].ss.ss);
-        seg[inx].ss.ff=seg[2*inx +1].ss.ff + seg[2*inx +2].ss.ff - min(seg[2*inx +1].ss.ff,seg[2*inx +2].ss.ss);
-        seg[inx].ss.ss=seg[2*inx +1].ss.ss + seg[2*inx +2].ss.ss - min(seg[2*inx +1].ss.ff,seg[2*inx +2].ss.ss);
-
-    }
-    pair<ll,pll> query(int inx, int low, int high, int l, int r){
-        if(r<low || l>high){
-            return {0,{0,0}};
-        }
-        if(low>=l && high<=r){
-            return seg[inx];
-        }
-        int mid=(low+high)/2;
-        pair<ll,pll> left=query(2*inx +1,low,mid,l,r);
-        pair<ll,pll> right=query(2*inx +2,mid+1,high,l,r);
-        pair<ll,pll> ans;
-        ans.ff = left.ff + right.ff + min(left.ss.ff,right.ss.ss);
-        ans.ss.ff = left.ss.ff + right.ss.ff - min(left.ss.ff,right.ss.ss);
-        ans.ss.ss = left.ss.ss + right.ss.ss - min(left.ss.ff,right.ss.ss);
-        return ans;
-    }
-};
 
 void solve()
 {
-    string s;
-    cin>>s;
-    ll n=s.size();
-    segtree s1(n);
-    s1.build(0,0,n-1,s);
-    ll m;
-    cin>>m;
-    fr(i,0,m){
-        ll x,y;
-        cin>>x>>y;
-        x--;y--;
-        pair<ll,pll> final=s1.query(0,0,n-1,x,y);
-        cout<<2*final.ff<<endl;
+    ll n;
+    cin>>n;
+    vin(a,n);
+    vin(b,n);
+    if(a[n-1]!=b[n-1]){
+        no;
+        done;
     }
-
+    vll d(n-1);
+    fr(i,0,n-1) {
+        d[i] = a[i] ^ b[i];
+    }
+    ll i=0;
+    while(i<n-1){
+        if(d[i]==0){ i++; continue; }
+        ll j=i;
+        while(true){
+            if(d[j] == a[j+1]){ 
+                i = j+1; break; 
+            }
+            if(j==n-2){no;done;}
+            if(d[j+1]!=(d[j]^a[j+1])){no;done; }
+            j++;
+        }
+    }
+    yes;
 }
 
 signed main()
@@ -228,9 +210,8 @@ signed main()
     //cout << fixed << setprecision(25);
     cerr << fixed << setprecision(10);
     auto start = std::chrono::high_resolution_clock::now();
-    //precompp(n);
     ll tt = 1;
-    //cin >> tt;
+    cin >> tt;
     while (tt--)
     {
         solve();

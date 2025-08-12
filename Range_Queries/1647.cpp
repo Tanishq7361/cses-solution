@@ -1,45 +1,58 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 08-04-2025
-// problem : Static range minimum queries
+// Date : 11-08-2025
+// problem : Static Range Minimum Queries
 
 #include <bits/stdc++.h>
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
+using namespace __gnu_pbds;
 
-#define ll long long int
-#define vll vector<long long int>
-int main()
-{
+#define ll long long
+#define vll vector<long long>
+
+void build(int inx, int low, int high, vll&seg, vll &arr){
+    if(low==high){
+        seg[inx]=arr[low];
+        // cout<<inx<<' '<<low<<' '<<arr[low]<<endl;
+        return;
+    }
+    int mid=(low+high)/2;
+    build(2*inx +1,low,mid,seg,arr);
+    build(2*inx +2,mid+1,high,seg,arr);
+    seg[inx]=min(seg[2*inx +1],seg[2*inx +2]);
+}
+
+int query(int inx, int low, int high, int l, int r, vll &seg){
+    // no overlap
+    if(r<low || l>high){
+        return INT_MAX;
+    }
+    // complete overlap
+    if(low>=l && high<=r){
+        return seg[inx];
+    }
+    // partial overlap is left
+    int mid=(low+high)/2;
+    int left=query(2*inx +1,low,mid,l,r,seg);
+    int right=query(2*inx +2,mid+1,high,l,r,seg);
+    return min(left,right);
+}
+
+int main(){
+    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n,q;
     cin>>n>>q;
     vll a(n);
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    ll z=sqrt(n)+ !(z*z==n);
-    vll b(z);
-    ll mn=INT_MAX;
-    for(int i=0;i<n;i++){
-        if(i%z==0){
-            mn=INT_MAX;
-        }
-        mn=min(mn,a[i]);
-        b[i/z]=mn;
-    }
+    vll seg(4*n);
+    build(0,0,n-1,seg,a);
     while(q--){
         ll x,y;
         cin>>x>>y;
-        x--;
-        y--;
-        ll ans=INT_MAX;
-        for(int j=x;j<=y;j++){
-            if(j%z==0 && j+z-1<=y){
-                ans=min(ans,b[j/z]);
-                j+=z-1;
-            }else{
-                ans=min(ans,a[j]);
-            }
-        }
-        cout<<ans<<endl;
+        cout<<query(0,0,n-1,x-1,y-1,seg)<<endl;
     }
 }

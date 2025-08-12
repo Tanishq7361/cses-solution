@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 // Date : 13-08-2025
-// problem : 
+// problem : Range Update Queries
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
@@ -12,26 +12,24 @@ using namespace __gnu_pbds;
 #define ll long long
 #define vll vector<long long>
 
-
-
 class ST{
-    vector<int>seg,lazy;
+    vector<ll>seg,lazy;
 public:
-    ST(int n){
+    ST(ll n){
         seg.resize(4*n);
         lazy.resize(4*n);
     }
-    void build(int inx, int low, int high, vll&a){
+    void build(ll inx, ll low, ll high, vll&a){
         if(low==high){
             seg[inx]=a[low];
             return;
         }
-        int mid=(low+high)/2;
+        ll mid=(low+high)/2;
         build(2*inx +1, low, mid, a);
         build(2*inx +2, mid+1, high, a);
         seg[inx]=seg[2*inx +1] + seg[2*inx +2];
     }
-    void update(int inx, int low, int high, int l, int r, int val){
+    void update(ll inx, ll low, ll high, ll l, ll r, ll val){
         // if previous lazy is not computed on that index
         if(lazy[inx]!=0){
             seg[inx]+=(high-low+1)*lazy[inx];
@@ -55,12 +53,12 @@ public:
             return;
         }
         //partial overlap
-        int mid=(low+high)/2;
+        ll mid=(low+high)/2;
         update(2*inx +1,low,mid,l,r,val);
         update(2*inx +2,mid+1,high,l,r,val);
         seg[inx]=seg[2*inx +1]+seg[2*inx +2];
     }
-    int query(int inx, int low, int high, int k){
+    ll query(ll inx, ll low, ll high, ll k){
         if(lazy[inx]!=0){
             seg[inx]+=(high-low+1)*lazy[inx];
             if(low!=high){
@@ -72,7 +70,7 @@ public:
         if(low==high){
             return seg[inx];
         }
-        int mid=(low+high)/2;
+        ll mid=(low+high)/2;
         if(k>mid){
             return query(2*inx +2,mid+1,high,k);
         }
@@ -82,19 +80,17 @@ public:
     }
 };
 
-
-
-int main(){
+signed main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    int n,q;
+    ll n,q;
     cin>>n>>q;
     vll a(n);
-    for(int i=0;i<n;i++){
+    for(ll i=0;i<n;i++){
         cin>>a[i];
     }
     ST sg1(n);
     sg1.build(0,0,n-1,a);
-    for(int i=0;i<q;i++){
+    for(ll i=0;i<q;i++){
         ll w;
         cin>>w;
         if(w==1){
