@@ -27,4 +27,3 @@ int main()
         cout<<pref[b]-pref[a-1]<<endl;;
     }
 }
-
