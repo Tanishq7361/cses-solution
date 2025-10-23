@@ -1,14 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
-
+ 
 // Date : 05-07-2025
-// problem : Grid Path Description(I think it should be in graph section)
-// Not Solved
+// problem : Grid Path Description(CPH book)
+ 
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 #define ll long long
 #define vll vector<long long>
-
+ 
 void dfs(ll x,ll y,ll ct,string &s,vector<vector<bool>>&vis,ll &ans,vector<pair<ll,ll>>move){
     if(x==6 && y==0){
         if(ct==48){
@@ -59,7 +59,7 @@ void dfs(ll x,ll y,ll ct,string &s,vector<vector<bool>>&vis,ll &ans,vector<pair<
         }
     }
 }
-
+ 
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);

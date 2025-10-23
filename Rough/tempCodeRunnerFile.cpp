@@ -1,36 +1,21 @@
-// created: 07.08.2025
+// created: 08.10.2025
 
 #include <bits/stdc++.h>
 #include "ext/pb_ds/assoc_container.hpp"
 #include "ext/pb_ds/tree_policy.hpp"
+// #include<atcoder/all>
 
 using namespace std;
 using namespace __gnu_pbds;
+// using namespace atcoder;
 
 template<class T> 
 using ordered_set = tree<T, null_type,less<T>, rb_tree_tag, tree_order_statistics_node_update> ;
 template<class key, class value, class cmp = std::less<key>>
 using ordered_map = tree<key, value, cmp, rb_tree_tag, tree_order_statistics_node_update>;
-
 // .find_by_order(k)  returns iterator to kth element starting from 0;
 // .order_of_key(k) returns count of elements strictly smaller than k;
 
-#define TRACE
-#ifdef TRACE
-    #define trace(...) __f(#__VA_ARGS__, __VA_ARGS__)
-    template <typename Arg1>
-    void __f(const char* name, Arg1&& arg1){
-        cerr << name << " : " << arg1 << endl;
-    }
-    template <typename Arg1, typename... Args>
-    void __f(const char* names, Arg1&& arg1, Args&&... args){
-        const char* comma = strchr(names + 1, ',');
-        cerr.write(names, comma - names) << " : " << arg1<<" | ";
-        __f(comma+1, args...);
-    }
-#else
-    #define trace(...) 1
-#endif
 struct custom_hash { //to avoid TLE due to collision in unordered_map
     static uint64_t splitmix64(uint64_t x) {
         x += 0x9e3779b97f4a7c15;
@@ -51,33 +36,29 @@ struct custom_hash { //to avoid TLE due to collision in unordered_map
 
 const long long  MOD = 1e9 + 7;
 const long long  MOD1 = 998244353;
-const int N=1e6;
 
 #define endl '\n'
-#define ll long long
-#define stc static_cast
-#define vll vector<ll>
+#define ll   long long
+#define stc  static_cast
+#define vll  vector<ll>
+#define vbl  vector<bool>
+#define vsl  vector<string>
+#define vbll vector<vector<bool>>
 #define vvll vector<vector<ll>>
 #define vpll vector<pair<ll,ll>>
-#define pll pair<ll, ll>
-#define ppll pair<pair<ll,ll>,ll>
-#define pllp pair<ll,pair<ll,ll>>
+#define pll  pair<ll, ll>
 #define umll unordered_map<ll,ll,custom_hash>
-#define pb push_back
-#define ppb pop_back
+#define pb   push_back
 #define bitcnt __builtin_popcountll
-#define ff first
-#define ss second
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define one cout << "1\n"
+#define ff   first
+#define ss   second
+#define yes cout << "Yes\n"
+#define no cout << "No\n"
 #define mone cout << "-1\n"
 #define zro cout << "0\n"
-#define ent cout << endl
 #define done return
-#define fr(i, l, r) for (ll i = (l); i < (r); i++)
-#define frr(i, r, l) for (ll i = (r - 1); i >= l; i--)
-#define sz(x) ll((x).size()) 
+#define rep(i, l, r) for (ll i = (l); i < (r); i++)
+#define repr(i, r, l) for (ll i = (r - 1); i >= l; i--)
 #define all(x) (x).begin(), (x).end()
 #define srt(x) sort((x).begin(), (x).end())
 #define rsrt(x) sort((x).rbegin(), (x).rend())
@@ -86,55 +67,53 @@ const int N=1e6;
 #define minval(v) *min_element((v).begin(), (v).end())
 #define maxid(v) max_element((v).begin(), (v).end()) - ((v).begin())
 #define minid(v) min_element((v).begin(), (v).end()) - ((v).begin())
-
-#define in(T,n) \
-    T n;     \
-    cin >> n
-#define in2(T,n,k) \
-    T n, k;      \
-    cin >> n >> k
-#define in3(T,a,b,c) \
-    T a, b, c;      \
-    cin >> a >> b >> c
-#define in4(T,a,b,c,d) \
-    T a, b, c, d;      \
-    cin >> a >> b >> c >> d
-#define vin(a, n)              \
-    vll a(n);                  \
+template<class T> int LB(vector<T> &v,T a){return lower_bound(v.begin(),v.end(),a)-v.begin();}
+template<class T> int UB(vector<T> &v,T a){return upper_bound(v.begin(),v.end(),a)-v.begin();}
+using u32=unsigned int;
+using u64=unsigned long long;
+using i128=__int128;
+using u128=unsigned __int128;
+using f128=__float128;
+#define vin(T, a, n)              \
+    vector<T> a(n);                  \
     for (ll i = 0; i < n; i++) \
         cin >> a[i];
-#define vvin(a, n, m)              \
-    vvll a(n, vll(m));             \
+#define vin1(T, a, n)              \
+    vector<T> a(n+1);                  \
+    for (ll i = 1; i <=n; i++) \
+        cin >> a[i];
+#define mem(n, i) memset(n, i, sizeof n)
+#define vpin(a, n)               \
+    vpll a(n);                   \
+    for (ll i = 0; i < n; i++)   \
+        cin >> a[i].ff >> a[i].ss;
+#define vvin(T, a, n, m)              \
+    vector<vector<T>> a(n, vector<T>(m)); \
     for (ll i = 0; i < n; i++)     \
-    {                              \
         for (ll j = 0; j < m; j++) \
-        {                          \
-            cin >> a[i][j];        \
-        }                          \
-    }                              
-#define vout(a)           \
-    for (auto x : a)      \
-    {                     \
-        cout << x << ' '; \
-    }                     \
-    cout << '\n';
-#define vpout(a)           \
-    for (pair<ll,ll> x : a)      \
-    {                     \
-        cout << x.ff << ' '<<x.ss<<endl; \
-    }                     
+             cin >> a[i][j];          
+template<class T>void vout(vector<T> &n){for(int i=0;i<int(n.size());i++){cout<<n[i]<<" ";}cout<<'\n';}
+template<class T>void vout(vector<vector<T>> &n){for(int i=0;i<int(n.size());i++){for(int j=0;j<int(n[i].size());j++){cout<<n[i][j]<<" ";}cout<<'\n';}cout<<'\n';}
 #define o1(a) cout << a << '\n'
-#define o2(a, b) cout << a << ' ' << b << '\n'
-#define o3(a, b, c) cout << a << ' ' << b << ' ' << c << '\n'
-#define o4(a, b, c, d) cout << a << ' ' << b << ' ' << c << ' ' << d << '\n'
-
 
 // rotate(v.begin(),v.begin()+v.size()-r,v.end()); for rotating vector r times right
 // rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
 // Use "set_name".max_load_factor(0.25);"set_name".reserve(512); with unordered set
 // Or use gp_hash_table<X,null_type>
+// multiset.erase removes all occurence
+// multiset.erase(multiset.find()) removes first occurence
 
-
+inline ll cntinv(vll &a){
+    ordered_set<ll> s;
+    ll ans = 0;
+    repr(i, a.size(), 0){
+        ans += s.order_of_key(a[i]);
+        s.insert(a[i]);
+    }
+    return ans;
+}
+vector<ll>dx={1,-1,0,0,1,1,-1,-1};
+vector<ll>dy={0,0,1,-1,1,-1,1,-1};
 inline bool isPrime(ll n) {
     if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
     for(ll i=5; i*i<=n; i+=6) { if(n % i == 0 || n % (i+2) == 0) return false; } return true;}
@@ -156,66 +135,124 @@ inline ll clearBit(ll n, ll pos) { return (n & (~(1 << pos))); }
 inline ll toggleBit(ll n, ll pos) { return (n ^ (1 << pos)); }
 inline ll turnOffRightmostSetBit(ll n) { return (n & (n - 1)); }
 inline bool isBitSet(ll n, ll p) { return (n & (1LL << p)) != 0; }
-inline ll ansXor(ll n){
-    if (n % 4 == 0) return n;
-    if (n % 4 == 1) return 1;
-    if (n % 4 == 2) return n + 1;
-    return 0;
+inline ll ansXor(ll n){ return n % 4 == 0 ? n : n % 4 == 1 ? 1 : n % 4 == 2 ? n + 1 : 0; }
+vll fact,invfact;
+void precompp(ll n){
+    fact.resize(n+1),invfact.resize(n+1);
+    fact[0]=invfact[0]=1;
+    rep(i,1,n+1){fact[i]=(fact[i-1]*i)%MOD;}
+    invfact[n] = modinv(fact[n], MOD);
+    repr(i,n,1) invfact[i] = (invfact[i+1]*(i+1))%MOD;
 }
-inline ll cntinv(vll &a){
-    ordered_set<ll> s;
-    ll ans = 0;
-    ll z = a.size();
-    frr(i, z, 0){
-        ans += s.order_of_key(a[i]);
-        s.insert(a[i]);
+class segtree{
+    vector<ll>seg,lazy,count;
+public:
+    segtree(ll n){
+        seg.resize(4*n +1);
+        lazy.resize(4*n +1);
+        count.resize(4*n +1);
     }
-    return ans;
-}
+    void build(ll inx, ll low, ll high, vll&arr){
+        if(low==high){
+            seg[inx]=arr[low];
+            count[inx]=1;
+            return;
+        }
+        ll mid=(low+high)/2;
+        build(2*inx +1,low,mid,arr);
+        build(2*inx +2,mid+1,high,arr);
+        if(seg[2*inx +1]<seg[2*inx +2]){
+            count[inx]=count[2*inx +1];
+        }
+        else if(seg[2*inx +1]>seg[2*inx +2]){
+            count[inx]=count[2*inx +2];
+        }
+        else{
+            count[inx]=count[2*inx +1]+count[2*inx +2];
+        }
+        seg[inx]=min(seg[2*inx +1],seg[2*inx +2]);
+    }
 
+    pll query(ll inx, ll low, ll high, ll lq, ll rq){
+        // no overlap
+        if(rq<low || lq>high || lq>rq){
+            return {1e18,0};
+        }
+        // complete overlap
+        if(low>=lq && high<=rq){
+            return {seg[inx],count[inx]};
+        }
+        // partial overlap is left
+        ll mid=(low+high)/2;
+        pll left=query(2*inx +1,low,mid,lq,rq);
+        pll right=query(2*inx +2,mid+1,high,lq,rq);
+        if(left.ff<right.ff){
+            return left;
+        }
+        else if(left.ff>right.ff){
+            return right;
+        }
+        return {left.ff,left.ss+right.ss};
+    }
+
+    void update(ll inx, ll low, ll high, ll i, ll val,vll&arr){
+        if(low==high){
+            seg[inx]=val;
+            count[inx]=1;
+            return;
+        }
+        ll mid=(low+high)/2;
+        if(i<=mid){
+            update(2*inx +1,low,mid,i,val,arr);
+        }
+        else{
+            update(2*inx +2,mid+1,high,i,val,arr);
+        }
+        if(seg[2*inx +1]<seg[2*inx +2]){
+            count[inx]=count[2*inx +1];
+        }
+        else if(seg[2*inx +1]>seg[2*inx +2]){
+            count[inx]=count[2*inx +2];
+        }
+        else{
+            count[inx]=count[2*inx +1]+count[2*inx +2];
+        }
+        seg[inx]=min(seg[2*inx +1],seg[2*inx +2]);
+    }
+};
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vin(a,n);
-    vin(b,n);
-    if(a[n-1]!=b[n-1]){
-        no;
-        done;
-    }
-    vll d(n-1);
-    fr(i,0,n-1) {
-        d[i] = a[i] ^ b[i];
-    }
-    ll i=0;
-    while(i<n-1){
-        if(d[i]==0){ i++; continue; }
-        ll j=i;
-        while(true){
-            if(d[j] == a[j+1]){ 
-                i = j+1; break; 
-            }
-            if(j==n-2){no;done;}
-            if(d[j+1]!=(d[j]^a[j+1])){no;done; }
-            j++;
+    ll n,m;
+    cin>>n>>m;
+    vin(ll,a,n);
+    segtree s(n);
+    s.build(0,0,n-1,a);
+    while(m--){
+        ll type,x,y;
+        cin>>type>>x>>y;
+        if(type==1){
+            s.update(0,0,n-1,x,y,a);
+        }
+        else{
+            pll ans=s.query(0,0,n-1,x,y-1);
+            cout<<ans.ff<<' '<<ans.ss<<endl;
         }
     }
-    yes;
 }
 
 signed main()
 {
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    //cout << fixed << setprecision(25);
+    // cout << fixed << setprecision(25);
     cerr << fixed << setprecision(10);
     auto start = std::chrono::high_resolution_clock::now();
+    // precompp(n);
     ll tt = 1;
-    cin >> tt;
+    // cin >> tt;
     while (tt--)
-    {
-        solve();
-    }
+    { solve(); }
+
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
     cerr << "Time Taken: " << ((long double)duration.count())/((long double) 1e9) << " sec.\n";

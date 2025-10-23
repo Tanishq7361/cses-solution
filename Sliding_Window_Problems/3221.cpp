@@ -1,69 +1,47 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 14-07-2025
+// Date : 08-09-2025
 // problem : Sliding Window Minimum
 
 #include <bits/stdc++.h>
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
+using namespace __gnu_pbds;
+
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
+// .find_by_order(k)  returns iterator to kth element starting from 0;
+// .order_of_key(k) returns count of elements strictly smaller than k;
 
 #define ll long long
 #define vll vector<long long>
+#define pb push_back
+#define pll pair<ll,ll>
 
-struct AggStack {
-    stack<pair<int, int>> st;
-    void push(int x) {
-        int cur = st.empty() ? x : min(st.top().second, x);
-        st.push({x, cur});
-    }
-    void pop() {
-        st.pop();
-    }
-    int agg() const {
-        return st.top().second;
-    }
-};
-struct AggQueue {
-    AggStack in, out;
-
-    void push(int x) {
-        in.push(x);
-    }
-    void pop() {
-        if (out.st.empty()) {
-            while (!in.st.empty()) {
-                int v = in.st.top().first;
-                in.pop();
-                out.push(v);
-            }
-        }
-        out.pop();
-    }
-    int query() const {
-        if (in.st.empty()) return out.agg();
-        if (out.st.empty()) return in.agg();
-        return min(in.agg(), out.agg());
-    }
-};
+const int MOD = 1e9 +7;
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-    ll n,k;
+    ll k,n;
+    ll a,b,x,c;
     cin>>n>>k;
-    ll x,a,b,c;
     cin>>x>>a>>b>>c;
-    AggQueue mq;
-    ll final=x;
-    ll ans=0;
+    priority_queue<pll,vector<pll>,greater<pll>>pq;
+    ll curr=x;
     for(int i=0;i<k;i++){
-        mq.push(final);
-        final=(a*final +b)%c;
+        pq.push({curr,i});
+        curr=(a*curr +b)%c;
     }
-    ans^=mq.query();
+    ll ans=pq.top().first;
     for(int i=k;i<n;i++){
-        mq.push(final);
-        mq.pop();
-        ans^=mq.query();
-        final=(a*final +b)%c;
+        pq.push({curr,i});
+        curr=(a*curr +b)%c;
+        while(pq.top().second+k <= i){
+            pq.pop();
+        }
+        ans^=pq.top().first;
     }
     cout<<ans<<endl;
 }
