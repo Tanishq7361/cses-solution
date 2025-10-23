@@ -22,7 +22,7 @@ The problems are organized into different categories as listed on the CSES site.
 | Graph Algorithms | 21 |
 | Interactive Problems | 1 |
 | Mathematics | 9 |
-| Range Queries | 5 |
+| Range Queries | 7 |
 | String Algorithm | 1 |
 | Bitwise Operation | 1 |
 | Sliding Window | 8 |
