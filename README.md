@@ -17,14 +17,14 @@ The problems are organized into different categories as listed on the CSES site.
 | Category | Solved |
 |----------|--------|
 | Introductory Problems | 23 |
-| Sorting and Searching | 32 |
-| Dynamic Programming | 17 |
-| Graph Algorithms | 23 |
+| Sorting and Searching | 33 |
+| Dynamic Programming | 18 |
+| Graph Algorithms | 26 |
 | Interactive Problems | 1 |
-| Mathematics | 11 |
+| Mathematics | 14 |
 | Range Queries | 18 |
-| String Algorithm | 1 |
-| Bitwise Operation | 6 |
+| String Algorithm | 4 |
+| Bitwise Operation | 7 |
 | Sliding Window | 10 |
 <!--PROGRESS_END-->
 
