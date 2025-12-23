@@ -22,130 +22,92 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 const int MOD = 1e9 +7;
 
-struct HLD {
-    int n;
-    std::vector<int> siz, top, dep, par, in, out, ord;
-    std::vector<std::vector<int>> adj;
-    int cur;
-    
-    HLD() {}
-    HLD(int n) {
-        init(n);
-    }
-    
-    // Initialize the tree structures
-    void init(int n) {
-        this->n = n;
-        siz.resize(n);
-        top.resize(n);
-        dep.resize(n);
-        par.resize(n);
-        in.resize(n);
-        out.resize(n);
-        ord.resize(n);
-        cur = 0;
-        adj.assign(n, {});
-    }
-    
-    void addEdge(int u, int v) {
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-    
-    void work(int root = 0) {
-        top[root] = root;
-        dep[root] = 0;
-        par[root] = -1;
-        dfs1(root);
-        dfs2(root);
-    }
-    
-    void dfs1(int u) {
-        if (par[u] != -1) {
-            adj[u].erase(std::find(adj[u].begin(), adj[u].end(), par[u]));
+struct lca{
+    private:
+        vector<vector<ll>>llca,adj;
+        vll depth;
+
+    public:
+        lca(ll n){
+            llca.resize(n+1,vll(20,-1));
+            adj.resize(n+1);
+            depth.resize(n+1);
+        };
+        void dfs(ll u, ll p){
+            if(p!=-1){
+                llca[u][0]=p;
+                for(int i=1;i<20;i++){
+                    if(llca[u][i-1]!=-1){
+                        llca[u][i]=llca[llca[u][i-1]][i-1];
+                    }
+                }
+            }
+            for(auto x:adj[u]){
+                if(x==p) continue;
+                depth[x]=depth[u]+1;
+                dfs(x,u);
+            }
         }
-        siz[u] = 1;
-        for (auto &v : adj[u]) {
-            par[v] = u;
-            dep[v] = dep[u] + 1;
-            dfs1(v);
-            siz[u] += siz[v];
-            if (siz[v] > siz[adj[u][0]]) std::swap(v, adj[u][0]);
+        void add(ll u, ll v){
+            adj[u].pb(v);
+            adj[v].pb(u);
         }
-    }
-    
-    void dfs2(int u) {
-        in[u] = cur++;
-        ord[in[u]] = u;
-        for (auto v : adj[u]) {
-            top[v] = (v == adj[u][0] ? top[u] : v);
-            dfs2(v);
+        void work(ll root=1){
+            depth[root]=1;
+            dfs(root,-1);
         }
-        out[u] = cur;
-    }
-    
-    int lca(int u, int v) {
-        while (top[u] != top[v]) {
-            if (dep[top[u]] > dep[top[v]]) u = par[top[u]];
-            else v = par[top[v]];
+        ll findLca(ll u, ll v){
+            ll ans=0;
+            if(depth[u]<depth[v]){
+                swap(u,v);
+            }
+            ll k=depth[u]-depth[v];
+            for(int i=19;i>=0;i--){
+                if(k&(1ll<<i)){
+                    u=llca[u][i];
+                }
+            }
+            if(u==v) return u;
+
+            for(int i=19;i>=0;i--){
+                if(llca[u][i]!=llca[v][i]){
+                    u=llca[u][i];
+                    v=llca[v][i];
+                }
+            }
+            return llca[u][0];
         }
-        return dep[u] < dep[v] ? u : v;
-    }
-    
-    int dist(int u, int v) {
-        return dep[u] + dep[v] - 2 * dep[lca(u, v)];
-    }
-    
-    int jump(int u, int k) {
-        if (dep[u] < k) return -1;
-        int d = dep[u] - k;
-        while (dep[top[u]] > d) u = par[top[u]];
-        return ord[in[u] - dep[u] + d];
-    }
-    
-    bool isAncester(int u, int v) {
-        return in[u] <= in[v] && in[v] < out[u];
-    }
-    
-    int getDepth(int u) { return dep[u]; }
-    int getpar(int u) { return par[u]; }
-    int getSubtreeSize(int u) { return siz[u]; }
-    
-    int rootedpar(int u, int v) {
-        std::swap(u, v);
-        if (u == v) return u;
-        if (!isAncester(u, v)) return par[u];
-        auto it = std::upper_bound(adj[u].begin(), adj[u].end(), v, [&](int x, int y) {
-            return in[x] < in[y];
-        }) - 1;
-        return *it;
-    }
-    
-    int rootedSize(int u, int v) {
-        if (u == v) return n;
-        if (!isAncester(v, u)) return siz[v];
-        return n - siz[rootedpar(u, v)];
-    }
-    
-    int rootedLca(int a, int b, int c) {
-        return lca(a, b) ^ lca(b, c) ^ lca(c, a);
-    }
+        ll ithboss(ll u, ll inx){
+            return llca[u][inx];
+        }
+        ll findkthlca(ll u, ll v, ll k){
+            ll z=findLca(u,v);
+            k--;
+            ll ans=z;
+            for(int i=19;i>=0;i--){
+                if((1ll<<i)&k){
+                    ans=ithboss(ans,i);
+                }
+                if(ans==-1) break;
+            }
+            return ans;
+        }
 };
 
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n,q;
     cin>>n>>q;
-    HLD h(n+1);
+    lca lc(n);
     for(int i=2;i<=n;i++){
         ll x,y;
-        cin>>x>>y;
-        h.addEdge(x,y);
+        cin>>x;
+        lc.add(x,i);
     }
-    h.work(1);
+    lc.work(1);
     while(q--){
         ll x,y;
         cin>>x>>y;
-        cout<<h.lca(x,y)<<endl;
+        cout<<lc.findLca(x,y)<<endl;
     }
 }

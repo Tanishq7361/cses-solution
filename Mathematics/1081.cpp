@@ -1,11 +1,8 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-
-// Date : 06-07-2025
-// problem : Common Divisors
+// Date : 17-11-2025
 
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 #define ll long long
 #define vll vector<long long>
 
@@ -14,20 +11,24 @@ int main(){
     ll n;
     cin>>n;
     vll a(n);
-    unordered_map<ll,ll>mpp;
+    vector<ll>w(1e6 +1);
     ll mx=0;
     for(int i=0;i<n;i++){
         cin>>a[i];
-        mpp[a[i]]++;
+        w[a[i]]++;
         mx=max(mx,a[i]);
     }
     ll ans=1;
-    vector<ll> fact(mx+1,0);
-    for(int i=2;i<=mx;i++){
-        for(int j=i;j<=mx;j+=i){
-            if(mpp[j]>0){fact[i]+=mpp[j];}
-            if(fact[i]>1){ans=i;}
+    vector<ll>fact(mx+1);
+    for(int j=mx;j>=2;j--){
+        int cnt=0;
+        for(int i=j;i<=mx;i+=j){
+            cnt+=w[i];
+            if(cnt>=2){
+                cout<<j<<'\n';
+                return 0;
+            }
         }
     }
-    cout<<ans<<endl;
+    cout<<ans<<'\n';
 }

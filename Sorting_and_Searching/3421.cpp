@@ -1,47 +1,43 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-
-// Date : 21-07-2025
-// problem : Distinct Values Subsequences
+// Date : 12-11-2025
 
 #include <bits/stdc++.h>
+#include "ext/pb_ds/assoc_container.hpp"
+#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
+using namespace __gnu_pbds;
 
-const long long  MOD = 1e9 + 7;
-const long long  MOD1 = 998244353;
+template <class T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-#define endl '\n'
+// .find_by_order(k)  returns iterator to kth element starting from 0;
+// .order_of_key(k) returns count of elements strictly smaller than k;
+
 #define ll long long
-#define stc static_cast
-#define vll vector<ll>
-#define pll pair<ll, ll>
+#define vll vector<long long>
 #define pb push_back
-#define ppb pop_back
-#define bitcount __builtin_popcountll
+#define pll pair<ll,ll>
 #define ff first
 #define ss second
-#define yes cout << "YES\n"
-#define no cout << "NO\n"
-#define one cout << "1\n"
-#define mone cout << "-1\n"
-#define zro cout << "0\n"
-#define ent cout << endl
-#define done return
-#define fr(i, l, r) for (ll i = (l); i < (r); i++)
-#define frr(i, r, l) for (ll i = (r - 1); i >= l; i--)
-#define sz(x) ll((x).size()) 
-#define all(x) (x).begin(), (x).end()
-#define srt(x) sort((x).begin(), (x).end())
-#define rsrt(x) sort((x).rbegin(), (x).rend())
-#define rev(x) reverse(x.begin(), x.end())
-#define maxval(v) *max_element((v).begin(), (v).end())
-#define minval(v) *min_element((v).begin(), (v).end())
-#define maxid(v) max_element((v).begin(), (v).end()) - ((v).begin())
-#define minid(v) min_element((v).begin(), (v).end()) - ((v).begin())
 
-// rotate(v.begin(),v.begin()+v.size()-r,v.end()); for rotating vector r times right
-// rotate(v.begin(),v.begin()+r,v.end()); for rotating vector r times left
-// Use "set_name".max_load_factor(0.25);"set_name".reserve(512); with unordered set
-// Or use gp_hash_table<X,null_type>
+const int MOD = 1e9 +7;
+
+struct custom_hash { //to avoid TLE due to collision in unordered_map
+    static uint64_t splitmix64(uint64_t x) {
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
+    size_t operator()(uint64_t x) const {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+    template<typename L, typename R>
+    size_t operator()(pair<L,R> const& Y) const{
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(Y.first * 31 + Y.second + FIXED_RANDOM);
+    }
+};
 inline bool isPrime(ll n) {
     if(n <= 1) return false; if(n <= 3) return true; if(n % 2 == 0 || n % 3 == 0) return false;
     for(ll i=5; i*i<=n; i+=6) { if(n % i == 0 || n % (i+2) == 0) return false; } return true;
@@ -76,20 +72,17 @@ int main(){
     ll n;
     cin>>n;
     vll a(n);
-    map<ll,ll>mpp;
-    for(int i=0;i<n;i++){
-        cin>>a[i];
-        mpp[a[i]]++;
-    }
+    unordered_map<ll,ll,custom_hash>mpp;
     ll ans=0;
     for(int i=0;i<n;i++){
-        ll z=mpp.size();
-        ll temp=n-i-a[i];
-        ans=modadd(ans,power(2,z-1));
-        mpp[a[i]]--;
-        if(mpp[a[i]]==0){
-            mpp.erase(a[i]);
-        }
+        cin>>a[i];
+    }
+    for(int i=n-1;i>=0;i--){
+        mpp[a[i]]++;
+        ll z=mpp.size()-1;
+        ans+=power(2,z);
+        ans%=MOD;
     }
     cout<<ans<<endl;
+    
 }

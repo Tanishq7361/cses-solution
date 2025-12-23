@@ -1,36 +1,21 @@
-///////////////////////////////////////////////////////////////////////////////////////////
-
-// Date : 09-09-2025
+// Date : 29-10-2025
 // problem : Tree Matching
 
 #include <bits/stdc++.h>
-#include "ext/pb_ds/assoc_container.hpp"
-#include "ext/pb_ds/tree_policy.hpp"
 using namespace std;
-using namespace __gnu_pbds;
-
-template <class T>
-using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
-// .find_by_order(k)  returns iterator to kth element starting from 0;
-// .order_of_key(k) returns count of elements strictly smaller than k;
 
 #define ll long long
 #define vll vector<long long>
 #define pb push_back
-#define pll pair<ll,ll>
 
-const int MOD = 1e9 +7;
-
-void dfs(ll node, ll par, vector<vector<ll>>&adj,vector<vector<ll>>&dp){
-    vll temp;
+void dfs(ll node, ll par, vector<vector<ll>>&adj, vector<vector<ll>>&dp){
     for(auto x:adj[node]){
-        if(x==par){continue;}
+        if(x==par) continue;
         dfs(x,node,adj,dp);
-        temp.pb(x);
         dp[node][0]+=max(dp[x][0],dp[x][1]);
     }
-    for(auto x:temp) {
+    for(auto x:adj[node]){
+        if(x==par) continue;
         dp[node][1]=max(dp[node][1],dp[node][0] - max(dp[x][0], dp[x][1]) + dp[x][0] + 1);
     }
 }

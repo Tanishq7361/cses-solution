@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-// Date : 13-10-2025
+// Date : 25-10-2025
 // problem : Distinct Values Queries
 
 #include <bits/stdc++.h>
@@ -14,7 +14,6 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 
 // .find_by_order(k)  returns iterator to kth element starting from 0;
 // .order_of_key(k) returns count of elements strictly smaller than k;
-
 
 struct custom_hash { //to avoid TLE due to collision in unordered_map
     static uint64_t splitmix64(uint64_t x) {
@@ -41,99 +40,6 @@ struct custom_hash { //to avoid TLE due to collision in unordered_map
 
 const int MOD = 1e9 +7;
 
-class segtree{
-    vector<ll>seg,lazy;
-public:
-    segtree(ll n){
-        seg.resize(4*n +1);
-        lazy.resize(4*n +1);
-    }
-    void build(ll inx, ll low, ll high, vll&arr,unordered_map<ll,ll,custom_hash>&mpp){
-        if(low==high){
-            seg[inx]=1;
-            mpp[arr[low]]++;
-            return;
-        }
-        ll mid=(low+high)/2;
-        build(2*inx +1,low,mid,arr,mpp);
-        build(2*inx +2,mid+1,high,arr,mpp);
-        seg[inx]=mpp.size();
-    }
-
-    void lazyupdate(ll inx, ll low, ll high, ll lq, ll rq, ll val){
-        if(lazy[inx]!=0){
-            seg[inx]+=(high-low+1)*lazy[inx];
-            if(low!=high){
-                lazy[2*inx +1]+=lazy[inx];
-                lazy[2*inx +2]+=lazy[inx];
-            }
-            lazy[inx]=0;
-        }
-        if(rq<low || lq>high || low>high){
-            return ;
-        }
-        if(low>=lq && high<=rq){
-            seg[inx]+=(high-low+1)*lazy[inx];
-            if(low!=high){
-                lazy[2*inx +1]+=lazy[inx];
-                lazy[2*inx +2]+=lazy[inx];
-            }
-            return;
-        }
-        ll mid=(low+high)/2;
-        lazyupdate(2*inx +1,low,mid,lq,rq,val);
-        lazyupdate(2*inx +2,mid+1,high,lq,rq,val);
-        seg[inx]=seg[2*inx +1]+seg[2*inx +2];
-    }
-
-    void update(ll inx, ll low, ll high, ll i, ll val,vll&arr){
-        if(low==high){
-            seg[inx]=val;
-            return;
-        }
-        ll mid=(low+high)/2;
-        if(i<=mid){
-            update(2*inx +1,low,mid,i,val,arr);
-        }
-        else{
-            update(2*inx +2,mid+1,high,i,val,arr);
-        }
-    }
-
-    ll query(ll inx, ll low, ll high, ll lq, ll rq){
-        // no overlap
-        if(rq<low || lq>high || low>high){
-            return 0;
-        }
-        // complete overlap
-        if(low>=lq && high<=rq){
-            return seg[inx];
-        }
-        // partial overlap is left
-        ll mid=(low+high)/2;
-        ll left=query(2*inx +1,low,mid,lq,rq);
-        ll right=query(2*inx +2,mid+1,high,lq,rq);
-        return left+right;
-    }
-    
-    ll lazyquery(ll inx, ll low, ll high, ll lq, ll rq){
-        if(lazy[inx]!=0){
-            seg[inx]+=(high-low+1)*lazy[inx];
-            if(low!=high){
-                lazy[2*inx +1]+=lazy[inx];
-                lazy[2*inx +2]+=lazy[inx];
-            }
-            lazy[inx]=0;
-        }
-        if(rq<low || lq>high || low>high) return 0;
-        if(low>=lq && high<=rq){
-            return seg[inx];
-        }
-        ll mid=(low+high)/2;
-        return lazyquery(2*inx +1,low,mid,lq,rq)+lazyquery(2*inx +2,mid+1,high,lq,rq);
-    }
-};
-
 int main(){
     ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
     ll n,q;
@@ -142,15 +48,25 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    unordered_map<ll,ll,custom_hash>mpp;
-    segtree st(n);
-    st.build(0,0,n-1,a,mpp);
-
+    ll z=sqrt(n);
+    vector<unordered_map<ll,ll,custom_hash>> decom(z+1);
+    ll ct=0;
+    for(int i=0;i<n;i++){
+        unordered_map<ll,ll,custom_hash>mpp;
+        for(int j=0;i<n && j<z;j++){
+            mpp[a[i]]++;
+            i++;
+        }
+        decom[ct]=mpp;
+        ct++;
+    }
     while(q--){
         ll x,y;
         cin>>x>>y;
-        x--;y--;
-        cout<<st.query(0,0,n-1,x,y)<<endl;
+        x--;
+        y--;
+        
+
     }
     
 }
