@@ -1,47 +1,58 @@
-// Date : 19-12-2025
-
+///////////////////////////////////////////////////////////////////////////////////////////
+ 
+// Date : 09-09-2025
+// problem : Tree Diameter
+ 
 #include <bits/stdc++.h>
 using namespace std;
 
 #define ll long long
+#define vll vector<long long>
+#define pb push_back
+#define pll pair<ll,ll>
 
-const int MOD = 1e9 +7;
-
+void dfs(ll node, ll par, vector<vector<ll>>&adj, vll&dist,ll&mx){
+    vll temp;
+    for(auto x:adj[node]){
+        if(x==par){continue;}
+        dfs(x,node,adj,dist,mx);
+        dist[node]=max(dist[node],dist[x]+1);
+        temp.pb(dist[x]);
+    }
+    if(temp.size()==0){
+        return;
+    }
+    else if(temp.size()==1){
+        mx=max(mx,1+temp[0]);
+    }
+    else if(temp.size()==2){
+        mx=max(mx,2+temp[0]+temp[1]);
+    }
+    else{
+        sort(temp.rbegin(),temp.rend());
+        mx=max(mx,2+temp[0]+temp[1]);
+    }
+    return;
+}
+ 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    int n;
+    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    // !! first method is doing bfs/dfs 2 times !!
+    // in first bfs find farthest node 
+    // in second bfs find farthest from farthest
+    // this will give diameter
+ 
+    ll n;
     cin>>n;
     vector<vector<ll>>adj(n+1);
-    for(int i=1;i<n;i++){
+    for(int i=0;i<n-1;i++){
         ll x,y;
         cin>>x>>y;
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        adj[x].pb(y);
+        adj[y].pb(x);
     }
-    vector<ll>dp(n+1);
-    vector<ll>up(n+1);
-    vector<ll>down(n+1);
-    
-    function<void(ll,ll)>dfs=[&](ll node, ll par){
-        for(auto x:adj[node]){
-            if(x==par) continue;
-            dfs(x,node);
-            down[node]=max(down[node],down[x]+1);
-        }
-    };
-    function<void(ll,ll)>dfs2=[&](ll node, ll par){
-        for(auto x:adj[node]){
-            if(x==par) continue;
-            dfs(x,node);
-            down[node]=max(down[node],down[x]+1);
-        }
-    };
-    dfs(1,0);
-    dfs2(1,0);
-    for(int i=1;i<=n;i++){
-        cout<<dp[i]<<' ';
-    }
+    vll dist(n+1);
+    ll mx=0;
+    dfs(1,-1,adj,dist,mx);
+    cout<<mx<<'\n';
 }
-
