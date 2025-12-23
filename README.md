@@ -35,5 +35,5 @@ The problems are organized into different categories as listed on the CSES site.
 git clone https://github.com/<your-username>/cses-solutions.git
 cd cses-solutions
 
-g++ -std=c++17 cses/Introductory Problems/weird_algorithm.cpp -o output
+g++ -std=c++17 cses/Introductory Problems/1068.cpp -o output
 ./output
