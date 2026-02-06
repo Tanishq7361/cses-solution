@@ -17,17 +17,17 @@ int main(){
     ll t;
     cin>>t;
     while(t--){
-        double x1,y1,x2,y2,x3,y3;
+        ll x1,y1,x2,y2,x3,y3;
         cin>>x1>>y1>>x2>>y2>>x3>>y3;
-        double slope=(double)(y2-y1)/(double)(x2-x1);
-        if(y3-y1==slope*(x3-x1)){
-            cout<<"TOUCH"<<endl;
-        }
-        else if(y3-y1 - slope*(x3-x1) < 0){
+        ll w=(y3-y1)*(x2-x1) - ((y2-y1)*(x3-x1));
+        if(w>0){
             cout<<"LEFT"<<endl;
         }
-        else{
+        else if(w<0){
             cout<<"RIGHT"<<endl;
+        }
+        else{
+            cout<<"TOUCH"<<endl;
         }
     }
 
