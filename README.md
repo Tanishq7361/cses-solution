@@ -16,11 +16,11 @@ The problems are organized into different categories as listed on the CSES site.
 
 | Category | Solved |
 |----------|--------|
-| Introductory Problems | 23 |
+| Introductory Problems | 24 |
 | Sorting and Searching | 33 |
 | Dynamic Programming | 18 |
-| Graph Algorithms | 26 |
-| Interactive Problems | 1 |
+| Graph Algorithms | 27 |
+| Interactive Problems | 2 |
 | Mathematics | 18 |
 | Range Queries | 18 |
 | String Algorithm | 4 |
