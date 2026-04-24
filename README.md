@@ -21,7 +21,7 @@ The problems are organized into different categories as listed on the CSES site.
 | Dynamic Programming | 18 |
 | Graph Algorithms | 26 |
 | Interactive Problems | 1 |
-| Mathematics | 14 |
+| Mathematics | 18 |
 | Range Queries | 18 |
 | String Algorithm | 4 |
 | Bitwise Operation | 7 |
