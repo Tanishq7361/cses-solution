@@ -15,42 +15,28 @@ int main(){
     ll n,m;
     cin>>n>>m;
     vll adj[n+1];
-    vll indeg(n+1);
     for(int i=0;i<m;i++){
         ll x,y;
         cin>>x>>y;
         adj[x].pb(y);
-        indeg[y]++;
     }
     vll dist(n+1,-1);
+    dist[1]=0;
     vll par(n+1,-1);
-    vll topo;
-    queue<ll>q;
-    for(int i=1;i<=n;i++){
-        if(indeg[i]==0) q.push(i);
-    }
+    queue<pair<ll,ll>>q;
+    q.push({0,1});
     while(!q.empty()){
-        ll node=q.front();
+        auto [cost,node]=q.front();
         q.pop();
-        topo.push_back(node);
         for(auto &x:adj[node]){
-            indeg[x]--;
-            if(indeg[x]==0){
-                q.push(x);
+            if(dist[x]<dist[node]+1){
+                dist[x]=dist[node]+1;
+                q.push({dist[x],x});
+                par[x]=node;
             }
         }
     }
-    dist[1]=1;
-    for(auto &x:topo){
-        if(dist[x]<0) continue;
-        for(auto &y:adj[x]){
-            if(dist[y]<dist[x]+1){
-                dist[y]=dist[x]+1;
-                par[y]=x;
-            }
-        }
-    }
-    if(dist[n]<0){
+    if(dist[n]==-1){
         cout<<"IMPOSSIBLE"<<endl;
         return 0;
     }

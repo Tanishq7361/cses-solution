@@ -1,79 +1,111 @@
-// created: 07.02.2026
+//----------------------------------String Algo-------------------------------------//
 
-#include <bits/stdc++.h>
-using namespace std;
-
-const long long MAXX=1e18 +13;
-const long long MOD=1e9 +7;
-const long long MOD1=998244353;
-
-#define endl            '\n'
-#define ll              long long
-#define vll             vector<ll>
-#define vvll            vector<vector<ll>>
-#define vpll            vector<pair<ll,ll>>
-#define pll             pair<ll,ll>
-#define pb              push_back
-#define bitcnt          __builtin_popcountll
-#define ff              first
-#define ss              second
-#define yes             cout<<"Yes\n"
-#define no              cout<<"No\n"
-#define mone            cout<<-1<<endl
-#define done            return
-#define rep(i,l,r)      for(ll i=(l);i<(r);i++)
-#define repr(i,r,l)     for(ll i=(r-1);i>=l;i--)
-#define all(x)          (x).begin(),(x).end()
-#define srt(x)          sort((x).begin(),(x).end())
-#define rev(x)          reverse(x.begin(),x.end())
-#define maxvl(v)        *max_element((v).begin(),(v).end())
-#define minvl(v)        *min_element((v).begin(),(v).end())
-#define fastio          ios_base::sync_with_stdio(false); cin.tie(NULL)
-#define flush           cout.flush()
-#define deb(x)          cerr<<(#x)<<" is "<<(x)<<endl
-#define vin(T,a,n)      vector<T>a(n); rep(i,0,n) cin>>a[i];
-#define vvin(T,a,n,m)   vector<vector<T>>a(n,vector<T>(m)); rep(i,0,n) rep(j,0,m) cin>>a[i][j];
-inline  bool            compar(pair<ll,ll>a,pair<ll,ll>b){if(a.ff==b.ff){return a.ss<b.ss;} else{return a.ff>b.ff;}}
-inline  bool            fastprime(ll n){return n>1 && (n<=3 || (n%2 && n%3 && [&](){for(ll i=5;i*i<=n;i+=6) if(n%i==0||n%(i+2)==0) return false; return true;}()));}
-inline  ll              powerfn(ll a,ll b,ll mod=MOD){ll ans=1; a%=mod; while(b>0){ if(b&1){ans=(ans*a)%mod;} a=(a*a)%mod; b>>=1;} return ans;}
-inline  ll              modsum(ll a,ll b,ll mod=MOD){return ((a%mod + b%mod)%mod);}
-inline  ll              modmul(ll a,ll b,ll mod=MOD){return ((a%mod * b%mod)%mod);}
-inline  ll              modinv(ll a,ll mod=MOD){return powerfn(a,mod-2,mod);}
-inline  ll              msbpos(ll n){if(n==0) return -1; return (63-(__builtin_clzll(n)));}
-inline  ll              gcd(ll a,ll b){if(b==0) return a; return gcd(b,a%b);}
-inline  ll              lcm(ll a,ll b){return (a/gcd(a,b) *b);}
-inline  ll              nCr(ll n,ll r){if(r>n) return 0; if(r>n-r) r=n-r; ll res=1; for(ll i=1;i<=r;i++) res=res*(n-i+1)/i; return res;}
-inline  ll              ansxor(ll n){return n%4==0 ? n : n%4==1 ? 1 : n%4==2 ? n+1 : 0;}
-const   vector<ll>dx    ={1,0,-1,0,1,1,-1,-1};
-const   vector<ll>dy    ={0,1,0,-1,1,-1,1,-1};
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-template<class T>void vout(vector<T>&n){for(auto &x:n){cout<<x<<' ';}cout<<endl;}
-template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){cout<<y<<' ';}cout<<endl;}}
-#define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
-#define o1(a) cout<<a<<endl
-
-
-void solve(){
-    ll n;
-    cin>>n;
-    vin(ll,a,n);
-}
-
-
-int main(){
-    fastio;
-    // cout<<fixed<<setprecision(15);
-    int tt=1;
-    cin>>tt;
-    for(int i=1;i<=tt;i++){
-        // cout<<"Case #"<<i<<": ";
-        solve();
+vector<ll>z_f(string s){//Z[i] = length of longest substring starting at i that matches prefix
+    int n=s.size();
+    vector<ll>z(n);
+    ll l=0,r=0;
+    for(ll i=1;i<n;i++){
+        if(i<r){
+            z[i]=min(r-i,z[i-l]);
+        }
+        while(i+z[i]<n && s[z[i]]==s[i+z[i]]){
+            z[i]++;
+        }
+        if(i+z[i]>r){
+            l=i;
+            r=i+z[i];
+        }
     }
-    return 0;
+    return z;
 }
 
+vector<ll>prefix_f(string s){
+    //pi[i] is the length of the longest proper prefix of the substring s[0..i] which is also a suffix of this substring.
+    ll n=s.size();
+    vector<ll>pi(n);
+    for(ll i=1;i<n;i++){
+        ll j=pi[i-1];
+        while(j>0 && s[i]!=s[j]) j=pi[j-1];
+        if(s[i]==s[j]) j++;
+        pi[i]=j;
+    }
+    return pi;
+}
 
-// freopen("input.txt", "r", stdin);
-// freopen("output.txt", "w", stdout);
-// g++ -std=c++17 -O2 practise.cpp -o practise
-// ./practise < input.txt > output.txt
+string min_cycle(string s){
+    s+=s;
+    ll n=s.size();
+    ll low=0,ans=0;
+    while(low<n/2){
+        ans=low;
+        ll high=low+1,k=low;
+        while(high<n && s[k]<=s[high]){
+            if(s[k]<s[high]) k=low;
+            else k++;
+            high++;
+        }
+        while(low<=k) low+=high-k;
+    }
+    return s.substr(ans,n/2);
+}
+
+string maxpalin(string s){//Manacher’s Algorithm
+    string t="#";
+    for(char c:s){
+        t+=c;
+        t+="#";
+    }
+    ll n=t.size();
+    vector<ll>p(n);
+    ll low=0,high=0;
+    ll mx=0,inx=0;
+    for(ll i=0;i<n;i++){
+        if (i<high) p[i]=min(high-i,p[low+high-i]);
+        // kholvanu
+        while(i-p[i]-1>=0 && i+p[i]+1<n && t[i-p[i]-1]==t[i+p[i]+1]){ p[i]++;}
+        // update
+        if(i+p[i]>high){
+            low=i-p[i];
+            high=i+p[i];
+        }
+        // track answer
+        if(p[i]>mx){
+            mx=p[i],inx=i;
+        }
+    }
+    ll dia=(inx-mx)/2;
+    return s.substr(dia,mx);
+}
+
+struct Hashing{
+    string s; int n;
+    ll p1=331,m1=999999937;
+    ll p2=379,m2=1e9 + 87;
+    vll p_pow1,p_pow2,h1,h2,inv_pow1,inv_pow2;
+    Hashing(const string& str) : s(str){
+        n=s.length(); p_pow1.resize(n); p_pow2.resize(n);
+        h1.resize(n+1);
+        h2.resize(n+1);
+        inv_pow1.resize(n);
+        inv_pow2.resize(n);
+        p_pow1[0]=1; p_pow2[0]=1; inv_pow1[0]=1; inv_pow2[0]=1;
+        ll inv_p1=modinv(p1,m1); ll inv_p2=modinv(p2,m2);
+        for(int i=1;i<n;i++){
+            p_pow1[i]=(p_pow1[i-1]*p1) % m1; p_pow2[i]=(p_pow2[i-1]*p2)%m2;
+            inv_pow1[i]=(inv_pow1[i-1]*inv_p1) % m1; inv_pow2[i]=(inv_pow2[i-1]*inv_p2)%m2;
+        }
+        for(int i=0;i<n;i++){
+            h1[i+1]=(h1[i]+(s[i] - 'a' +1)*p_pow1[i])%m1;
+            h2[i+1]=(h2[i]+(s[i] - 'a' +1)*p_pow2[i])%m2;
+        }
+    }
+    pll get_hash(int l,int r){
+        ll res1=(h1[r+1]-h1[l]+m1)%m1; ll res2=(h2[r+1]-h2[l]+m2)%m2;
+        res1=(res1*inv_pow1[l])%m1; res2=(res2*inv_pow2[l])%m2;
+        return make_pair(res1,res2);
+    }
+};
+    // set hash ((a+k)^h +(b+k)^h + (c+k)^h )%m 
+    // k is large upto 10^9 and  60<h<small
+
+//----------------------------------------------------------------------------------//

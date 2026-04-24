@@ -1,11 +1,12 @@
-// created: 06.02.2026
+// created: 22.04.2026
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 const long long MAXX=1e18 +13;
 const long long MOD=1e9 +7;
 const long long MOD1=998244353;
+const long long NMOD=999999883;
 
 #define endl            '\n'
 #define ll              long long
@@ -56,21 +57,53 @@ template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){co
 void solve(){
     ll n;
     cin>>n;
-    vin(ll,a,n);
-    srt(a);
+    ll inx=0;
+    rep(i,0,32){
+        if((1ll<<i)<n){
+            inx=i;
+        }
+    }
+    bool f1=false;
     map<ll,ll>mpp;
-    rep(i,0,n){
-        mpp[a[i]]++;
+    inx=(inx+1)/2;
+    while(inx>0){
+        mpp[inx]++;
+        inx=(inx+1)/2;
     }
-    ll ans=0;   
-    rep(i,0,n){
-        ans=max(ans,mpp[a[i]]+mpp[a[i]+1]);
+    vpll ans;
+    rep(i,3,n){
+        if(mpp.count(i)){
+            continue;
+        }
+        ans.push_back({i,n});
     }
-    o1(ans);
+    ll last=n;
+    vll prev;
+    for(auto &x:mpp){
+        prev.push_back((1ll<<x.ff));
+    }
+    rev(prev);
+    ll cnt=0;
+    ll z=prev.size();
+    ll final;
+    for(int i=0;i<z;i++){
+        ll inx=last;
+        while(last>2){
+            ans.push_back({inx,prev[z]});
+            last=(last+prev[z]-1)/2;
+        }
+        if(last==2) cnt++; final=inx;
+        last=prev[z];
+    }
+    if(cnt==1){
+        ans.push_back({2,final});
+    }
+    cout<<ans.size()<<endl;
+    vpout(ans);
 }
 
 
-int main(){
+signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
     int tt=1;

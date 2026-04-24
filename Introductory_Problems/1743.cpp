@@ -2,7 +2,7 @@
 
 // Date : 05-07-2025
 // problem : String Reorder
-// Not solved
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -14,30 +14,38 @@ int main(){
     string s;
     cin>>s;
     ll n=s.size();
-    unordered_map<char,ll>mpp;
+    vector<ll>hash(26);
+    ll mxx=0;
     for(int i=0;i<n;i++){
-        mpp[s[i]]++;
-        if(mpp[s[i]] > ((n+1)/2)){
-            cout<<"-1"<<endl;
-            return 0;
-        }
+        hash[s[i]-'A']++;
+        mxx=max(mxx,hash[s[i]-'A']);
     }
-    string ans(n,'.');
-    ll inx=0;
-    ll st=0;
-    for(char c='A';c<='Z';c++){
-        inx=st;
-        while(mpp[c]>0){
-            ans[inx]=c;
-            mpp[c]--;
-            inx+=2;
-        }
-        for(int i=st;i<n;i++){
-            if(ans[i]=='.'){
-                st=i;
-                break;
+    if(2*mxx>n+1){
+        cout<<-1<<endl;
+        return 0;
+    }
+    vll ans(n);
+    ll prev=81;
+    for(int i=0;i<n;i++){
+        ll rem=n-i;
+        ll mx=0;
+        ll inx=-1;
+        ll low=-1;
+        for(int j=0;j<26;j++){
+            if(low==-1 && hash[j]>0 && prev!=j) low=j;
+            if(hash[j]>mx){
+                mx=hash[j];
+                inx=j;
             }
         }
+        if(2*mx==rem+1) ans[i]=inx;
+        else ans[i]=low;
+
+        hash[ans[i]]--;
+        prev=ans[i];
     }
-    cout<<ans<<endl;     
+    for(int i=0;i<n;i++){
+        cout<<(char)(ans[i]+'A');
+    }
+
 }

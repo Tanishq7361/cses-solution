@@ -9,12 +9,11 @@ using namespace std;
 #define ll long long
 #define vll vector<long long>
 const long long MOD=1e9 +7;
-int main()
-{
+int main(){
     ll n,m;
     cin>>n>>m;
     vector<vector<ll>>adj(n+1);
-    vll dp(n+1,0);
+    vll dp(n+1);
     vll indegree(n+1,0);
     for(int i=0;i<m;i++){
         ll x,y;
@@ -22,21 +21,30 @@ int main()
         adj[x].push_back(y);
         indegree[y]++;
     }
-    queue<pair<ll,ll>>q;
+    queue<ll>q;
     for(int i=1;i<=n;i++){
         if(indegree[i]==0){
-            dp[i]=1;
-            q.push({i,dp[i]});
+            q.push(i);
         }
     }
+    vll topo;
     while(!q.empty()){
-        ll node=q.front().first;
-        ll dist=q.front().second;
+        ll node=q.front();
         q.pop();
-        for(auto it:adj[node]){
-            dp[it]+=dp[node];
-            dp[it]%=MOD;
-            q.push({it,dp[it]});
+        topo.push_back(node);
+        for(auto &x:adj[node]){
+            indegree[x]--;
+            if(indegree[x]==0){
+                q.push(x);
+            }
+        }
+    }
+    dp[1]=1;
+    for(auto &x:topo){
+        if(dp[x]==0) continue;
+        for(auto &y:adj[x]){
+            dp[y]+=dp[x];
+            dp[y]%=MOD;
         }
     }
     cout<<dp[n]<<endl;

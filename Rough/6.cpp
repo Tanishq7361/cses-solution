@@ -1,4 +1,4 @@
-// created: 02.02.2026
+// created: 05.04.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -6,6 +6,7 @@ using namespace std;
 const long long MAXX=1e18 +13;
 const long long MOD=1e9 +7;
 const long long MOD1=998244353;
+const long long NMOD=999999883;
 
 #define endl            '\n'
 #define ll              long long
@@ -52,13 +53,55 @@ template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){co
 #define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
 #define o1(a) cout<<a<<endl
 
+const int MODD=676767677;
 
 void solve(){
-    
+    ll n,m;
+    cin>>n>>m;
+    vin(ll,b,n);
+    vll pref(m+1);
+    rep(i,0,n){
+        pref[b[i]]++;
+    }
+    rep(i,1,m+1){
+        pref[i]+=pref[i-1];
+    }
+    ll ans=1;
+    rep(i,0,n){
+        if(b[i]==0) continue;
+        ll w=1e9;
+        if(i>0){
+            w=b[i-1];
+        }
+        if(i<n-1){
+            w=min(w,b[i+1]);
+        }
+        // cout<<i<<' '<<w<<' ';
+        if(w<b[i]-1){
+            ans*=pref[b[i]-1]-pref[b[i]-2];
+        }
+        else if(w==b[i]-1){
+            ans*=pref[b[i]-1];
+        }
+        else{
+            ans*=0;
+        }
+        ans%=MODD;
+        // cout<<ans<<endl;
+    }
+    // 0-> 1
+    // 1-> 2 x 2 x 2
+    // 2-> 5
+    // 3-> 1 x 6
+    // 4-> 8
+    // 9 5
+    // 1 0 1 3 4 3 2 1 0
+    // 1920 = 2 x 3 x 5 x 8 x 8
+    cout<<ans<<endl;
 }
 
 
-int main(){
+signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
     int tt=1;

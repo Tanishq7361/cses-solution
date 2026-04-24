@@ -1,4 +1,4 @@
-// created: 06.02.2026
+// created: 22.04.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -6,6 +6,7 @@ using namespace std;
 const long long MAXX=1e18 +13;
 const long long MOD=1e9 +7;
 const long long MOD1=998244353;
+const long long NMOD=999999883;
 
 #define endl            '\n'
 #define ll              long long
@@ -54,13 +55,11 @@ template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){co
 
 
 void solve(){
-    ll n;
-    cin>>n;
-    vin(ll,a,n);
+    
 }
 
 
-int main(){
+signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
     int tt=1;

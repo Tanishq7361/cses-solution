@@ -1,124 +1,39 @@
-// created: 29.01.2026
-
 #include <bits/stdc++.h>
 using namespace std;
 
-const long long MAXX=1e18 +13;
-const long long MOD=1e9 +7;
-const long long MOD1=998244353;
-
-#define endl            '\n'
-#define ll              long long
-#define vll             vector<ll>
-#define vvll            vector<vector<ll>>
-#define vpll            vector<pair<ll,ll>>
-#define pll             pair<ll,ll>
-#define pb              push_back
-#define bitcnt          __builtin_popcountll
-#define ff              first
-#define ss              second
-#define yes             cout<<"YES\n"
-#define no              cout<<"NO\n"
-#define mone            cout<<-1<<endl
-#define done            return
-#define rep(i,l,r)      for(ll i=(l);i<(r);i++)
-#define repr(i,r,l)     for(ll i=(r-1);i>=l;i--)
-#define all(x)          (x).begin(),(x).end()
-#define srt(x)          sort((x).begin(),(x).end())
-#define rev(x)          reverse(x.begin(),x.end())
-#define maxvl(v)        *max_element((v).begin(),(v).end())
-#define minvl(v)        *min_element((v).begin(),(v).end())
-#define fastio          ios_base::sync_with_stdio(false); cin.tie(NULL)
-#define flush           cout.flush()
-#define deb(x)          cerr<<(#x)<<" is "<<(x)<<endl
-inline  ll              powerfn(ll a,ll b,ll mod=MOD){ll ans=1; a%=mod; while(b>0){ if(b&1){ans=(ans*a)%mod;} a=(a*a)%mod; b>>=1;} return ans;}
-inline  bool            compar(pair<ll,ll>a,pair<ll,ll>b){if(a.ff==b.ff){return a.ss<b.ss;} else{return a.ff>b.ff;}}
-inline  ll              modsum(ll a,ll b,ll mod=MOD){return ((a%mod + b%mod)%mod);}
-inline  ll              modmul(ll a,ll b,ll mod=MOD){return ((a%mod * b%mod)%mod);}
-inline  ll              modinv(ll a,ll mod=MOD){return powerfn(a,mod-2,mod);}
-inline  ll              msbpos(ll n){if(n==0) return -1; return (63-(__builtin_clzll(n)));}
-inline  ll              gcd(ll a,ll b){if(b==0) return a; return gcd(b,a%b);}
-inline  ll              lcm(ll a,ll b){return (a/gcd(a,b) *b);}
-inline  ll              nCr(ll n,ll r){if(r>n) return 0; if(r>n-r) r=n-r; ll res=1; for(ll i=1;i<=r;i++) res=res*(n-i+1)/i; return res;}
-inline  ll              ansxor(ll n){return n%4==0 ? n : n%4==1 ? 1 : n%4==2 ? n+1 : 0;}
-const   vector<ll>dx    ={1,0,-1,0,1,1,-1,-1};
-const   vector<ll>dy    ={0,1,0,-1,1,-1,1,-1};
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-#define vin(T,a,n)              \
-    vector<T>a(n);              \
-    rep(i,0,n) cin>>a[i];
-#define vvin(T,a,n,m)           \
-    vector<vector<T>>a(n,vector<T>(m)); \
-    rep(i,0,n) rep(j,0,m) cin>>a[i][j]; 
-vll roll;
-void preomp(){roll.resize(2024,2028);}
-template<class T>void vout(vector<T>&n){for(auto &x:n){cout<<x<<' ';}cout<<endl;}
-template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){cout<<y<<' ';}cout<<endl;}}
-#define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
-#define o1(a) cout<<a<<endl
+#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL)
+#define ll long long
+#define vll vector<ll>
 
 void solve(){
-    ll n;
-    cin>>n;
-    vin(ll,a,n);
-    ll x,y;
-    cin>>x>>y;
-    if(x>y) swap(x,y);
-    x--;
-    y--;
-    map<ll,vll>mpp;
-    rep(i,0,n){
-        mpp[a[i]].pb(i);
+    ll n,m;
+    cin>>n>>m;
+    vector<char>str={'A','B','C','D'};
+    vector<string>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    vll vis(n+1);
-    priority_queue<pll,vpll,greater<pll>>q;
-    vll dist(n+1,1e9);
-    vis[x]=1;
-    dist[x]=0;
-    q.push({0,x});
-    while(!q.empty()){
-        auto [dist1,inx]=q.top();
-        q.pop();
-        for(auto &w:mpp[a[inx]]){
-            if(dist[w]>dist1){
-                q.push({dist1,w});
-                dist[w]=dist1;
-            }
-        }
-        // mpp[a[inx]].clear();  
-        if(inx+1<n){
-            if(dist[inx+1]>dist1+1){
-                q.push({dist1+1,inx+1});
-                dist[inx+1]=dist1+1;
-            }
-        }
-        if(inx-1>=0){
-            if(dist[inx-1]>dist1+1){
-                q.push({dist1+1,inx-1});
-                dist[inx-1]=dist1+1;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            for(int k=0;k<4;k++){
+                if(str[k]==a[i][j] || (i>0 && str[k]==a[i-1][j]) || (j>0 && str[k]==a[i][j-1])){
+                    continue;
+                }
+                a[i][j]=str[k];
+                break;
             }
         }
     }
-    cout<<dist[y]<<endl;
-}
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cout<<a[i][j];
+        }
+        cout<<endl;
+    }
 
+}
 
 int main(){
     fastio;
-    preomp();
-    // cout<<fixed<<setprecision(15);
-    int tt=1;
-    cin>>tt;
-    for(int i=1;i<=tt;i++){
-        // cout<<"Case #"<<i<<": ";
-        solve();
-    }
-    return 0;
+    solve();
 }
-
-
-
-// freopen("input.txt", "r", stdin);
-// freopen("output.txt", "w", stdout);
-// g++ -std=c++17 -O2 practise.cpp -o practise
-// ./practise < input.txt > output.txt
