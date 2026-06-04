@@ -1,4 +1,4 @@
-// created: 14.04.2026
+// created: 23.05.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -53,24 +53,86 @@ template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){co
 #define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
 #define o1(a) cout<<a<<endl
 
+bool dfs(ll k,vpll&chck,vpll&a,ll person,map<vpll,ll>&mpp){
+    if(person){
+        for(int i=0;i<k;i++){
+            if(chck[i].ss>0){
+                chck[i].ss--;
+                if(mpp.find(chck)==mpp.end()){
+                    mpp[chck]=0;
+                    if(dfs(k,chck,a,person^1,mpp)){
+                        return mpp[chck]=1;
+                    }
+                }
+                chck[i].ss++;
+            }
+            if(chck[i].ss<a[i].ss){
+                chck[i].ss++;
+                if(mpp.find(chck)==mpp.end()){
+                    mpp[chck]=0;
+                    if(dfs(k,chck,a,person^1,mpp)){
+                        return mpp[chck]=1;
+                    }
+                }
+                chck[i].ss--;
+            }
+        }
+        return mpp[chck];
+    }
+    for(int i=0;i<k;i++){
+        if(chck[i].ss>0){
+            chck[i].ss--;
+            if(mpp.find(chck)==mpp.end()){
+                mpp[chck]++;
+                if(!dfs(k,chck,a,person^1,mpp)){
+                    mpp[chck]=true;
+                    return false;
+                }
+            }
+            chck[i].ss++;
+        }
+        if(chck[i].ss<a[i].ss){
+            chck[i].ss++;
+            if(mpp.find(chck)==mpp.end()){
+                mpp[chck]++;
+                if(!dfs(k,chck,a,person^1,mpp)){
+                    mpp[chck]=true;
+                    return false;
+                }
+            }
+            chck[i].ss--;
+        }
+    }
+    return true;
+}
 
 void solve(){
-    ll n,k;
-    cin>>n>>k;
-    vll dp(k+1);
-    repr(i,k,1){
-        ll temp=powerfn(k/i,n);
-        for(ll j=2*i;j<=k;j+=i){
-            temp=(temp-dp[j]+MOD)%MOD;
-        }
-        dp[i]=temp;
+    ll k;
+    cin>>k;
+    vpll a(k);
+    vpll chck(k);
+    map<vpll,ll>mpp;
+    map<ll,ll>powww;
+    rep(i,0,k){
+        cin>>a[i].ff>>a[i].ss;
     }
-    ll ans=0;
-    rep(i,1,k+1){
-        ans+=i*dp[i];
-        ans%=MOD;
+    ll m;
+    cin>>m;
+    vpll b(m);
+    rep(i,0,m){
+        cin>>b[i].ff>>b[i].ss;
+        powww[b[i].ff]=b[i].ss;
     }
-    cout<<ans<<endl;
+    for(int i=0;i<k;i++){
+        chck[i]={a[i].ff,powww[a[i].ff]};
+    }
+    mpp[chck]++;
+    if(dfs(k,chck,a,1,mpp)){
+        cout<<"Alice"<<endl;
+    }
+    else{
+        cout<<"Bob"<<endl;
+    }
 }
 
 
@@ -78,7 +140,7 @@ signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
     int tt=1;
-    // cin>>tt;
+    cin>>tt;
     for(int i=1;i<=tt;i++){
         // cout<<"Case #"<<i<<": ";
         solve();
