@@ -1,4 +1,4 @@
-// created: 23.05.2026
+// created: 06.06.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -53,86 +53,45 @@ template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){co
 #define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
 #define o1(a) cout<<a<<endl
 
-bool dfs(ll k,vpll&chck,vpll&a,ll person,map<vpll,ll>&mpp){
-    if(person){
-        for(int i=0;i<k;i++){
-            if(chck[i].ss>0){
-                chck[i].ss--;
-                if(mpp.find(chck)==mpp.end()){
-                    mpp[chck]=0;
-                    if(dfs(k,chck,a,person^1,mpp)){
-                        return mpp[chck]=1;
-                    }
-                }
-                chck[i].ss++;
-            }
-            if(chck[i].ss<a[i].ss){
-                chck[i].ss++;
-                if(mpp.find(chck)==mpp.end()){
-                    mpp[chck]=0;
-                    if(dfs(k,chck,a,person^1,mpp)){
-                        return mpp[chck]=1;
-                    }
-                }
-                chck[i].ss--;
-            }
-        }
-        return mpp[chck];
-    }
-    for(int i=0;i<k;i++){
-        if(chck[i].ss>0){
-            chck[i].ss--;
-            if(mpp.find(chck)==mpp.end()){
-                mpp[chck]++;
-                if(!dfs(k,chck,a,person^1,mpp)){
-                    mpp[chck]=true;
-                    return false;
-                }
-            }
-            chck[i].ss++;
-        }
-        if(chck[i].ss<a[i].ss){
-            chck[i].ss++;
-            if(mpp.find(chck)==mpp.end()){
-                mpp[chck]++;
-                if(!dfs(k,chck,a,person^1,mpp)){
-                    mpp[chck]=true;
-                    return false;
-                }
-            }
-            chck[i].ss--;
-        }
-    }
-    return true;
-}
 
 void solve(){
-    ll k;
-    cin>>k;
-    vpll a(k);
-    vpll chck(k);
-    map<vpll,ll>mpp;
-    map<ll,ll>powww;
-    rep(i,0,k){
-        cin>>a[i].ff>>a[i].ss;
+    ll n,k,m;
+    cin>>n>>k>>m;
+    vector<pair<ll,ll>>a(n);
+    vll vis(n);
+    map<ll,ll>colr;
+    for(int i=0;i<n;i++){
+        cin>>a[i].ss>>a[i].ff;
+    }    
+    srt(a);
+    rev(a);
+    ll ans=0;
+    ll cnt=0;
+    for(int i=0;i<n;i++){
+        if(colr.find(a[i].ss)==colr.end()){
+            ans+=a[i].ff;
+            colr[a[i].ss]++;
+            cnt++;
+            vis[i]=1;
+        }
+        if(cnt==m) break;
     }
-    ll m;
-    cin>>m;
-    vpll b(m);
-    rep(i,0,m){
-        cin>>b[i].ff>>b[i].ss;
-        powww[b[i].ff]=b[i].ss;
+    if(cnt==k){
+        cout<<ans<<endl;
+        done;
     }
-    for(int i=0;i<k;i++){
-        chck[i]={a[i].ff,powww[a[i].ff]};
+    // cout<<cnt<<endl;
+    for(int i=0;i<n;i++){
+        if(!vis[i]){
+            ans+=a[i].ff;
+            cnt++;
+        }
+        if(cnt==k){
+            cout<<ans<<endl;
+            done;
+        }
     }
-    mpp[chck]++;
-    if(dfs(k,chck,a,1,mpp)){
-        cout<<"Alice"<<endl;
-    }
-    else{
-        cout<<"Bob"<<endl;
-    }
+    // cout<<cnt<<endl;
 }
 
 
@@ -140,7 +99,7 @@ signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
     int tt=1;
-    cin>>tt;
+    // cin>>tt;
     for(int i=1;i<=tt;i++){
         // cout<<"Case #"<<i<<": ";
         solve();
