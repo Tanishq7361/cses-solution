@@ -1,4 +1,4 @@
-// created: 07.06.2026
+// created: 04.07.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -30,7 +30,6 @@ const long long NMOD=999999883;
 #define maxvl(v)        *max_element((v).begin(),(v).end())
 #define minvl(v)        *min_element((v).begin(),(v).end())
 #define fastio          ios_base::sync_with_stdio(false); cin.tie(NULL)
-#define flush           cout.flush()
 #define deb(x)          cerr<<(#x)<<" is "<<(x)<<endl
 #define vin(T,a,n)      vector<T>a(n); rep(i,0,n) cin>>a[i];
 #define vvin(T,a,n,m)   vector<vector<T>>a(n,vector<T>(m)); rep(i,0,n) rep(j,0,m) cin>>a[i][j];
@@ -50,37 +49,63 @@ const   vector<ll>dy    ={0,1,0,-1,1,-1,1,-1};
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 template<class T>void vout(vector<T>&n){for(auto &x:n){cout<<x<<' ';}cout<<endl;}
 template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){cout<<y<<' ';}cout<<endl;}}
-#define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
+template<class T>void vout1(vector<T>&x){ll z=x.size(); rep(i,1,z){cout<<x[i]<<' ';}cout<<endl;}
+#define vpout(a) for(auto &x:a){cout<<x.first<<' '<<x.second<<endl;}
 #define o1(a) cout<<a<<endl
+
+ll dp[501][2][2][1024][3];
+// len,tight,lead,mask,rem
+vll digits;
+ll cnt(ll pos, ll tight, ll lead, ll mask, ll rem){
+    ll len=digits.size();
+    ll c=__builtin_popcount(mask);
+    ll z=(mask&8);
+    if(pos==len){
+        ll temp=0;
+        if(rem==0) temp++;
+        if(z!=0) temp++;
+        if(c==3) temp++;
+        return (temp==1);
+    }
+    if(dp[pos][tight][lead][mask][rem]!=-1) return dp[pos][tight][lead][mask][rem];
+    ll ans=0;
+    ll mx=tight?digits[pos]:9;
+    for(int i=0;i<=mx;i++){
+        ll ntight=tight && (i==digits[pos]);
+        ll nlead=(lead && i==0);
+        if(nlead==0){
+            ans+=cnt(pos+1,ntight,nlead,mask|(1ll<<i),(rem+i)%3);
+        }
+        else{
+            ans+=cnt(pos+1,ntight,nlead,mask,rem);
+        }
+        ans%=MOD1;
+    }
+    return dp[pos][tight][lead][mask][rem]=ans;
+}
+ll small(string n){
+    digits.clear();
+    ll z=n.size();
+    for(int i=0;i<z;i++){
+        digits.pb(n[i]-'0');
+    }
+    memset(dp,-1,sizeof(dp));
+    return cnt(0,1,1,0,0);
+}
 
 
 void solve(){
-    ll n,x,y;
-    cin>>n>>x>>y;
-    ll low=0,high=1e10;
-    ll ans;
-    while(low<=high){
-        ll mid=(low+high)/2;
-        ll cnt=mid/x + mid/y;
-        if(cnt>=n){
-            ans=mid;
-            high=mid-1;
-        }
-        else{
-            low=mid+1;
-        }
-    }
-    cout<<ans<<endl;
+    string s;
+    cin>>s;
+    cout<<small(s)-1<<endl;
 }
-
 
 signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
-    int tt=1;
+    int tt=1; 
     // cin>>tt;
-    for(int i=1;i<=tt;i++){
-        // cout<<"Case #"<<i<<": ";
+    for(int i=1;i<=tt;i++){ // cout<<"Case #"<<i<<": ";
         solve();
     }
     return 0;

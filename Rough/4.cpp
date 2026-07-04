@@ -1,4 +1,4 @@
-// created: 22.04.2026
+// created: 18.06.2026
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -30,7 +30,6 @@ const long long NMOD=999999883;
 #define maxvl(v)        *max_element((v).begin(),(v).end())
 #define minvl(v)        *min_element((v).begin(),(v).end())
 #define fastio          ios_base::sync_with_stdio(false); cin.tie(NULL)
-#define flush           cout.flush()
 #define deb(x)          cerr<<(#x)<<" is "<<(x)<<endl
 #define vin(T,a,n)      vector<T>a(n); rep(i,0,n) cin>>a[i];
 #define vvin(T,a,n,m)   vector<vector<T>>a(n,vector<T>(m)); rep(i,0,n) rep(j,0,m) cin>>a[i][j];
@@ -50,66 +49,18 @@ const   vector<ll>dy    ={0,1,0,-1,1,-1,1,-1};
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 template<class T>void vout(vector<T>&n){for(auto &x:n){cout<<x<<' ';}cout<<endl;}
 template<class T>void vout(vector<vector<T>>&n){for(auto &x:n){for(auto &y:x){cout<<y<<' ';}cout<<endl;}}
-#define vpout(a) for(auto x:a){cout<<x.first<<' '<<x.second<<endl;}
+template<class T>void vout1(vector<T>&x){ll z=x.size(); rep(i,1,z){cout<<x[i]<<' ';}cout<<endl;}
+#define vpout(a) for(auto &x:a){cout<<x.first<<' '<<x.second<<endl;}
 #define o1(a) cout<<a<<endl
 
 
-void solve(){
-    ll n;
-    cin>>n;
-    ll inx=0;
-    rep(i,0,32){
-        if((1ll<<i)<n){
-            inx=i;
-        }
-    }
-    bool f1=false;
-    map<ll,ll>mpp;
-    inx=(inx+1)/2;
-    while(inx>0){
-        mpp[inx]++;
-        inx=(inx+1)/2;
-    }
-    vpll ans;
-    rep(i,3,n){
-        if(mpp.count(i)){
-            continue;
-        }
-        ans.push_back({i,n});
-    }
-    ll last=n;
-    vll prev;
-    for(auto &x:mpp){
-        prev.push_back((1ll<<x.ff));
-    }
-    rev(prev);
-    ll cnt=0;
-    ll z=prev.size();
-    ll final;
-    for(int i=0;i<z;i++){
-        ll inx=last;
-        while(last>2){
-            ans.push_back({inx,prev[z]});
-            last=(last+prev[z]-1)/2;
-        }
-        if(last==2) cnt++; final=inx;
-        last=prev[z];
-    }
-    if(cnt==1){
-        ans.push_back({2,final});
-    }
-    cout<<ans.size()<<endl;
-    vpout(ans);
-}
 
 
 signed main(){
     fastio;
     // cout<<fixed<<setprecision(15);
-    int tt=1;
-    cin>>tt;
-    for(int i=1;i<=tt;i++){
-        // cout<<"Case #"<<i<<": ";
+    int tt=1; cin>>tt;
+    for(int i=1;i<=tt;i++){ // cout<<"Case #"<<i<<": ";
         solve();
     }
     return 0;
